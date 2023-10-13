@@ -27,9 +27,10 @@ const items = [
     getItem("3 éme année", "resultat-3eme"),
   ]),
   getItem("Emploi de Temps", "emploi", <UserOutlined />, [
-    getItem("1er Année", "emploi-1er"),
-    getItem("2 éme année", "emploi-2eme"),
-    getItem("3 éme année", "emploi-3eme"),
+    getItem("1er Année", "Emploi_Premiere"),
+    getItem("2 éme année", "Emploi_Deuxieme"),
+    getItem("3 éme année", "Emploi_Troisieme"),
+    getItem("Calendrier des examens", "Calendrier"),
   ]),
   getItem("Enseignants", "enseignant", <TeamOutlined />, [
     getItem("Ajouter Enseignant", "AjoutEnseignant"),
@@ -43,7 +44,13 @@ const items = [
     getItem("Ajouter Agent", "AjoutUsers"),
     getItem("Liste des Utilisateurs", "ListeUsers"),
   ]),
-  getItem("Paramettre", "Paramettre", <FileOutlined />),
+  getItem("Parcours", "parcours", <FileOutlined />, [
+    getItem("Liste des Parcours", "Parcours"),
+
+  ]),
+  getItem("Matiers", "Matiers", <FileOutlined />, [
+    getItem("Liste des Matieres", "Matieres"),
+  ]),
   getItem("Profile", "Profile", <PieChartOutlined />),
 ];
 
@@ -126,7 +133,7 @@ const MainLayoutAdmin = () => {
                       <Link to="/admin/Profile">Profile</Link>
                     </NavDropdown.Item>
                     <NavDropdown.Item>
-                      <Link to="/Logout">Logout</Link>
+                      <Link to="/logout">Logout</Link>
                     </NavDropdown.Item>
                   </NavDropdown>
                 </Nav>

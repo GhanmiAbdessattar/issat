@@ -1,8 +1,8 @@
 import mysql from "mysql2"
 
-export const db =mysql.createPool({
+export const db =  mysql.createPool({
     host:"localhost",
     user:"root",
-    password:"root123",
+    password:"root",
     database:"issat2"
 })

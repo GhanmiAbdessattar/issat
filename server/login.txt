@@ -1,0 +1,49 @@
+ if (username === "" && password === "") {
+        return result.status(200).json({ Message: "vérifier votre login" });
+    }
+
+
+    const sql = 'SELECT * FROM issat2.etudiant WHERE username = ?';
+    db.query(sql, [username], (err, res) => {
+        console.log("username is:", username);
+        if ((res.length <= 0)) {
+            return result.json({ Message: "user doesn't exist" });
+        }
+
+        if (res) {
+            console.log("password in base is:", res[0].password);
+            const isPassworsCoorect = bcrypt.compareSync(password, res[0].password);
+            console.log("password is:", isPassworsCoorect)
+            if ((username === res[0].username) && isPassworsCoorect) {
+                console.log("password base", res[0].password)
+                console.log("votre password:", password)
+                console.log((username === res[0].username))
+                const id = res[0].id
+                const cin = res[0].mat_cin;
+                const nom = res[0].nom_fr;
+                const prenom = res[0].prenom_fr;
+                const num_inscription = res[0].Num_inscription;
+                const statut = res[0].statut_etud;
+                console.log("votre numinscription", id)
+                const token = jwt.sign({ id }, "jwt-secret-key", { expiresIn: '20s' });
+                console.log("votre token:", token)
+                console.log("nom:", nom)
+                console.log("prenom:", prenom)
+                console.log("statut:", statut)
+                result.cookie('token', token);
+                //console.log("result: ",result.status(200).json("err"))
+                result.status(200).json({ Message: "Success" , token:token, id: id, cin:cin, nom:nom, prenom: prenom, num_inscription:num_inscription, statut:statut});
+               
+
+            } else {
+                console.log("password base", res[0].password)
+                console.log("votre password:", password)
+                console.log((username === res[0].username))
+                // console.log("result: ",result.status(200).json("err"))
+                result.status(200).json({ Message: "Wrong Username and Password Combination" });
+
+            }
+
+        }
+
+    })

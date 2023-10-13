@@ -6,7 +6,6 @@ import {
   FileOutlined,
   PieChartOutlined,
   UserOutlined,
-  TeamOutlined,
 } from "@ant-design/icons";
 import {
   AiOutlinePicRight,
@@ -14,7 +13,7 @@ import {
   AiOutlineLogout,
 } from "react-icons/ai";
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import { Layout, Menu, theme } from "antd";
+import { Button, Layout, Menu, theme } from "antd";
 import { useState } from "react";
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -29,18 +28,6 @@ const items = [
   getItem("Acceuil", "acceuil", <PieChartOutlined />),
   getItem("Mes Notes", "mesnotes", <UserOutlined />),
   getItem("Emploi de Temps", "Emploi", <UserOutlined />),
-  getItem("Enseignants", "sub3", <TeamOutlined />, [
-    getItem("Ajouter Enseignant", "9"),
-    getItem("Team 2", "10"),
-  ]),
-  getItem("Etudiants", "sub4", <TeamOutlined />, [
-    getItem("Ajouter Etudiant", "11"),
-    getItem("Team 2", "12"),
-  ]),
-  getItem("Utilisateurs", "sub5", <TeamOutlined />, [
-    getItem("Ajouter Agent", "13"),
-    getItem("Team 2", "14"),
-  ]),
   getItem("Profile", "profile", <FileOutlined />),
   getItem("Quitter", "quité", <AiOutlineLogout />),
 ];
@@ -52,6 +39,11 @@ const MainLayout = () => {
   } = theme.useToken();
 
   const navigate = useNavigate();
+
+  const handelLogout = ()=>{
+        localStorage.removeItem('token')
+        navigate('/')
+  }
 
   return (
     <Layout
@@ -123,10 +115,14 @@ const MainLayout = () => {
                       menuVariant="gary"
                     >
                       <NavDropdown.Item>
-                        <Link to="/Profile">Profile</Link>
+                        
+                        <Link to="/acceuil/profile">Profile</Link>
+                       
                       </NavDropdown.Item>
                       <NavDropdown.Item>
-                        <Link to="/Logout">Logout</Link>
+                        <Button type="primary" onClick={handelLogout}>
+                                  Logout
+                        </Button>
                       </NavDropdown.Item>
                     </NavDropdown>
                   </Nav>

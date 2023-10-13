@@ -1,49 +1,61 @@
-import React from "react";
+import React, { useState } from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Form, Input, Button } from "antd";
-import { Link } from "react-router-dom";
-
+import { Form, Input, Button, Space, Alert } from "antd";
+import { Link, useNavigate } from "react-router-dom";
+import Validation from "../components/Validation";
+import axios from 'axios';
 
 
 const Register = () => {
+  axios.defaults.withCredentials = true;
+  const navigate = useNavigate();
 
-  /*const [inputs, setInputs] = useState({
-    cin:"",
-    numinscription:"",
-    username:"",
-    password:"",
-    confpassword:""
-  })*/
+  const [inputs, setInputs] = useState({
+    cin: "",
+    numinscription: "",
+    email: "",
+    password: ""
+  })
 
-  /*const navigate = useNavigate();*/
-
-
-  /* const handelChange =(e)=>{
-      setInputs(prev=>({...prev, [e.target.name]: e.target.value}))
-  
-    }
-  
-    */
+  const [errors, setErrors] = useState([]);
+  const [msg, setMsg] = useState([]);
 
 
-  /* const handelSubmit = async e =>{
+  const handleInput = (e) => {
+    setInputs(prev => ({ ...prev, [e.target.name]: e.target.value }))
+    console.log(inputs);
+
+  }
+  const handelValidation = async (e) => {
     e.preventDefault()
     try{
-       await axios.post("/auth/register", inputs)
-        navigate("/login")
-    }catch(err) {
-      setError(err.response.data);
-    }    
+      const response = await axios.post("/auth/register/", inputs);
+      console.log(response.data.Message)
+      if (response.data.Message === "User ajouter avec Success") {
+        console.log(response)
+        alert('register successful')
+        navigate('/login')
+        setMsg(response.data.Message)
+      } else {
+        console.log(response.data.Message)
+        setMsg(response.data.Message)
+        setErrors(Validation(inputs))
+      }
+     }catch(err){
+      console.log(err)
+     }
 
-  } */
+  
+    //            {errors.cin && <p style={{ color: "red" }}>{errors.cin}</p>}
 
-
+  }
   return (
     <div className="py-5" style={{ background: "#b9e7e7", minHeight: "100vh" }}>
 
       <div className="my-5 w-25 bg-white rounded-3 mx-auto p-4">
         <h3 className="text-center">Inscription</h3>
         <p className="text-center">S'inscrire sur la plateforme </p>
+
         <Form action="POST"
           name="register"
           className="login-form"
@@ -55,7 +67,7 @@ const Register = () => {
             htmlFor="cin"
             rules={[
               {
-                //  required: true,
+                required: true,
                 message: "votre CIN svp!",
               },
             ]}
@@ -63,20 +75,21 @@ const Register = () => {
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
               placeholder="votre CIN!"
-              type="text"
+              //type="text"
               name="cin"
               id="cin"
-              autoComplete="off"
-              required
-              aria-describedby="uidnote"
-
+              //autoComplete="off"
+              onChange={handleInput}
             />
+            {errors.cin && <p style={{ color: "red" }}>{errors.cin}</p>}
           </Form.Item>
+         
+
           <Form.Item
             htmlFor="inscription"
             rules={[
               {
-                // required: true,
+                required: true,
                 message: "votre Num d'inscription svp!",
               },
             ]}
@@ -84,72 +97,72 @@ const Register = () => {
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
               placeholder="votre Num d'inscription!"
-              type="text"
-              name="inscription"
-              id="inscription"
-              autoComplete="off"
-              required
+              //type="text"
+              name="numinscription"
+              id="numinscription"
+              //autoComplete="off"
+              onChange={handleInput}
             />
+                        {errors.numinscription && <p style={{ color: "red" }}>{errors.numinscription}</p>}
+
           </Form.Item>
+
           <Form.Item
-            htmlFor="username">
+            htmlFor="email">
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
-              placeholder="username"
-              name="username"
-              id="username"
-              autoComplete="off"
-              required
+              placeholder="Email"
+              name="email"
+              id="email"
+              //autoComplete="off"
+              onChange={handleInput}
             />
+            {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
+
           </Form.Item>
           <Form.Item
             htmlFor="password"
             rules={[
               {
-                //  required: true,
+                required: true,
                 message: "Please enter your Password!",
               },
             ]}
           >
-            <Input
-              prefix={<LockOutlined className="site-form-item-icon" />}
+
+
+            <Input.Password prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
               placeholder="votre mot de passe"
+
               name="password"
               id="password"
               autoComplete="off"
-              required
-            />
+              onChange={handleInput} />
+            {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
+
           </Form.Item>
 
-          <Form.Item
-            htmlFor="matchpassword"
-            rules={[
-              {
-                //  required: true,
-                message: "Please confirm your Password!",
-              },
-            ]}
-          >
-            <Input
-              prefix={<LockOutlined className="site-form-item-icon" />}
-              type="password"
-              placeholder="confirmer votre mot de passe"
-              name="matchpassword"
-              id="matchpassword"
-              autoComplete="off"
-              required
-            />
-          </Form.Item>
           <Form.Item>
             <Button
               type="primary"
               htmlType="submit"
               className="login-form-button w-100"
+              onClick={handelValidation}
+
             >
               Inscription
+
             </Button>
+
+
           </Form.Item>
+
+          {msg && <Space direction="vertical" style={{ width: '100%' }}>
+            <Alert message={msg} type="error" showIcon />
+          </Space>}
+
+
 
           <Form.Item name="remember" valuePropName="checked" noStyle>
             <label>vous avez déjà un compte?</label>
@@ -161,6 +174,7 @@ const Register = () => {
           </Form.Item>
 
         </Form>
+
       </div>
     </div>
   );

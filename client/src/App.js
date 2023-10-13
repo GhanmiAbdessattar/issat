@@ -18,7 +18,7 @@ import Profile from "./Etudiant/pages/Profile";
 import MainLayout from "./Etudiant/components/MainLayout";
 import MesNotes from "./Etudiant/pages/MesNotes";
 import DetailSemestre from "./Etudiant/components/DetailSemestre";
-import DetailModule from "./Etudiant/components/DetailModule";
+//import DetailModule from "./Etudiant/components/DetailModule";
 import EditProfile from "./Etudiant/pages/EditProfile";
 import Emploi from "./Etudiant/pages/Emploi";
 import ListEtudiant from "./Dashboard/pages/ListEtudiant";
@@ -26,6 +26,13 @@ import ListEnseignant from "./Dashboard/pages/ListEnseignant";
 import ResultatPremiere from "./Dashboard/pages/ResultatPremiere";
 import ResultatDexieme from "./Dashboard/pages/ResultatDexieme";
 import ResultatTroisième from "./Dashboard/pages/ResultatTroisième";
+import EmploiPremiere from "./Dashboard/pages/EmploiPremiere";
+import EmploiDeuxieme from "./Dashboard/pages/EmploiDeuxieme";
+import EmploiTroisieme from "./Dashboard/pages/EmploiTroisieme";
+import Calendrier from "./Dashboard/pages/Calendrier";
+import ListeParcours from "./Dashboard/pages/ListeParcours";
+import ListeMatieres from "./Dashboard/pages/ListeMatieres";
+import Acceuil from "./Etudiant/pages/Acceuil";
 
 
 function App() {
@@ -40,11 +47,13 @@ function App() {
      </Routes>
         <Routes>
           <Route path="/acceuil" element={<MainLayout />}>
-                <Route path="mesnotes" element={<MesNotes />} />
+                <Route path="acceuil" element={<Acceuil />} />
+                <Route path="/acceuil/mesnotes" element={<MesNotes />} />
+                <Route path="/acceuil/DetailSemestre" element={<DetailSemestre />} />
+                
                 <Route path="Emploi" element={<Emploi />} />
                 <Route path="profile" element={<Profile />} />
-                <Route path="detailSemestre" element={<DetailSemestre />} />
-                <Route path="detailModule" element={<DetailModule />} />
+                
                 <Route path="EditProfile" element={<EditProfile />} />
                 <Route path="quité" element={<Logout />} />
                 <Route path="resetPassword" element={<ResetPassword />} />
@@ -63,6 +72,12 @@ function App() {
           <Route path="/admin/resultat-1er" element={<ResultatPremiere />} />
           <Route path="/admin/resultat-2eme" element={<ResultatDexieme />} />
           <Route path="/admin/resultat-3eme" element={<ResultatTroisième />} />
+          <Route path="/admin/Emploi_Premiere" element={<EmploiPremiere />} />
+          <Route path="/admin/Emploi_Deuxieme" element={<EmploiDeuxieme />} />
+          <Route path="/admin/Emploi_Troisieme" element={<EmploiTroisieme />} />
+          <Route path="/admin/Calendrier" element={<Calendrier />} />
+          <Route path="/admin/Parcours" element={<ListeParcours />} />
+          <Route path="/admin/Matieres" element={<ListeMatieres />} />
           <Route path="/admin/Paramettre" element={<Parametre />} />
         </Route>
       </Routes>
