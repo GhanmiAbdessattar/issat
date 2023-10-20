@@ -1,11 +1,36 @@
 import Table from "react-bootstrap/Table";
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import { Modal, Space } from "antd";
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { Button } from 'antd';
 import EtudiantConfirm from "./EtudiantConfirm";
 
 const EtudiantListAttente = () => {
+
+  const [studentData, setStudentData] = useState([]);
+  useEffect(() => {
+    // Make an API request to fetch student data
+    fetch('/getEtudiant/etudiant')
+      .then((response) => response.json())
+      .then((data) => {
+     
+        if (data.etudiants && Array.isArray(data.etudiants)) {
+          // Filter students with 'Actif' status (case-insensitive, trimmed)
+          const filteredStudents = data.etudiants.filter((student) => student.statut_etud.trim().toLowerCase() === 'passif');
+          setStudentData(filteredStudents);
+          console.log(filteredStudents)
+        } else {
+          console.error('Invalid data format: "etudiants" array not found or not an array.');
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
+
+
+
   const { confirm } = Modal;
   const showConfirm = () => {
     confirm({
@@ -52,103 +77,39 @@ const EtudiantListAttente = () => {
         <thead>
           <tr>
             <th>N°</th>
-            <th>N°_Inscription</th>
             <th>CIN</th>
             <th>Nom_et_prénom</th>
-            <th>Diplôme</th>
             <th>Niveau</th>
             <th>Spécialité</th>
-            <th>Etat</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>01</td>
-            <td>12345</td>
-            <td>1135198</td>
-            <td>Harbaoui Roudayna</td>
-            <td>MP-EN-Réseaux et Télécommunication</td>
-            <td>1</td>
-            <td>1 ère MP RT(Nouveaux)</td>
-            <td>Actif</td>
-            <td>
-            <div className="d-flex">
-              <Space wrap>
-                   <Button  success size={"small"}  onClick={showConfirm}>Confirmer</Button>
-                </Space>
-                <Space wrap>
-                   <Button danger size={"small"} onClick={showDeleteConfirm}>Supprimer</Button>
-                </Space>
-
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>02</td>
-            <td>12345</td>
-            <td>1135198</td>
-            <td>Ghanmi Abdessattar</td>
-            <td>MP-EN-Réseaux et Télécommunication</td>
-            <td>1</td>
-            <td>1 ère MP RT(Nouveaux)</td>
-            <td>Actif</td>
-            <td>
+          {studentData.map((student, index) => (
+            <tr key={student.id}>
+              <td>{index + 1}</td>
+              <td>{student.mat_cin}</td>
+              <td>{student.nom_fr + ' ' + student.prenom_fr}</td>
+              <td>{student.passeport}</td>
+              <td>{student.specialite}</td>
+              <td>
               <div className="d-flex">
               <Space wrap>
-                   <Button  success size={"small"}  onClick={showConfirm}>Confirmer</Button>
+                   <Button  success size={"small"}  onClick={showConfirm}>Détail</Button>
                 </Space>
                 <Space wrap>
                    <Button danger size={"small"} onClick={showDeleteConfirm}>Supprimer</Button>
                 </Space>
 
               </div>
-               
-            </td>
-          </tr>
-          <tr>
-            <td>03</td>
-            <td>12345</td>
-            <td>1135198</td>
-            <td>Harbaoui Roudayna</td>
-            <td>MP-EN-Réseaux et Télécommunication</td>
-            <td>1</td>
-            <td>1 ère MP RT(Nouveaux)</td>
-            <td>Actif</td>
-            <td>
-            <div className="d-flex">
-              <Space wrap>
-                   <Button  success size={"small"}  onClick={showConfirm}>Confirmer</Button>
-                </Space>
-                <Space wrap>
-                   <Button danger size={"small"} onClick={showDeleteConfirm}>Supprimer</Button>
-                </Space>
 
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>04</td>
-            <td>12345</td>
-            <td>1135198</td>
-            <td>Ghanmi Abdessattar</td>
-            <td>MP-EN-Réseaux et Télécommunication</td>
-            <td>1</td>
-            <td>1 ère MP RT(Nouveaux)</td>
-            <td>Actif</td>
-            <td>
-            <div className="d-flex">
-              <Space wrap>
-                   <Button  success size={"small"}  onClick={showConfirm}>Confirmer</Button>
-                </Space>
-                <Space wrap>
-                   <Button danger size={"small"} onClick={showDeleteConfirm}>Supprimer</Button>
-                </Space>
-
-              </div>
-            </td>
-          </tr>
+              </td>
+           
+            </tr>
+          ))}
         </tbody>
+              
+     
       </Table>
     </div>
   );

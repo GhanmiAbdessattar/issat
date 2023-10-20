@@ -1,11 +1,31 @@
 import Table from "react-bootstrap/Table";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Space } from "antd";
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { Button } from 'antd';
 import AdminDetail from "./AdminDetail";
 const ListeAdmin = () => {
  
+  const [adminData, setAdminData] = useState([]);
+  useEffect(() => {
+    // Make an API request to fetch user data
+    fetch('/auth/getAdmin')
+      .then((response) => response.json())
+      .then((data) => {
+        const admin = data.admin
+        if (data.admin && Array.isArray(data.admin)) {
+        
+          setAdminData(admin);
+        } else {
+          console.error('Invalid data format: "admin" array not found or not an array.');
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
+
   const { confirm } = Modal;
   const showConfirm = () => {
     confirm({
@@ -52,25 +72,22 @@ const ListeAdmin = () => {
       <Table responsive="xl">
         <thead>
           <tr>
-            <th>N°</th>
+            <th>ID</th>
             <th>CIN</th>
-            <th>Nom_et_prénom</th>
-            <th>Role</th>
             <th>Email</th>
-            <th>Etat</th>
+            <th>Role</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>01</td>
-            <td>1135198</td>
-            <td>Ghanmi Abdessattar</td>
-            <td>Admin</td>
-            <td>ghanmiabdessattar1@gmail.com</td>
-            <td>Actif</td>
-            <td>
-            <div className="d-flex">
+          {adminData.map((user, index) => (
+            <tr key={user.id}>
+              <td>{user.id}</td>
+              <td>{user.cin}</td>
+              <td>{user.email}</td>
+              <td>{user.role}</td>
+              <td>
+              <div className="d-flex">
               <Space wrap>
                    <Button  success size={"small"}  onClick={showConfirm}>Détail</Button>
                 </Space>
@@ -79,27 +96,11 @@ const ListeAdmin = () => {
                 </Space>
 
               </div>
-            </td>
-          </tr>
-          <tr>
-            <td>02</td>
-            <td>1135198</td>
-            <td>Harbaoui Roudayna</td>
-            <td>Admin</td>
-            <td>Harbaoui@gmail.com</td>
-            <td>Actif</td>
-            <td>
-            <div className="d-flex">
-              <Space wrap>
-                   <Button  success size={"small"}  onClick={showConfirm}>Détail</Button>
-                </Space>
-                <Space wrap>
-                   <Button danger size={"small"} onClick={showDeleteConfirm}>Supprimer</Button>
-                </Space>
 
-              </div>
-            </td>
-          </tr>
+              </td>
+           
+            </tr>
+          ))}
         </tbody>
       </Table>
     </div>

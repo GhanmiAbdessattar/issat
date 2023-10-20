@@ -21,7 +21,7 @@ const Semestre = () => {
             <td>SIL G-2</td>
             <td>Principale</td>
             <td>
-              <Link to="/DetailSemestre">Detail</Link>
+              <Link to="DetailSemestre">Detail</Link>
             </td>
           </tr>
           <tr>
@@ -29,7 +29,7 @@ const Semestre = () => {
             <td>SIL G-2</td>
             <td>Principale</td>
             <td>
-              <Link to="/DetailSemestre">Detail</Link>
+              <Link to="DetailSemestre">Detail</Link>
             </td>
           </tr>
         </tbody>

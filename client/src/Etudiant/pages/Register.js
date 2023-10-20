@@ -18,28 +18,29 @@ const Register = () => {
   })
 
   const [errors, setErrors] = useState([]);
-  const [msg, setMsg] = useState([]);
+  const [msg, setMsg] = useState("");
 
 
   const handleInput = (e) => {
     setInputs(prev => ({ ...prev, [e.target.name]: e.target.value }))
-    console.log(inputs);
+    
 
   }
   const handelValidation = async (e) => {
     e.preventDefault()
     try{
       const response = await axios.post("/auth/register/", inputs);
-      console.log(response.data.Message)
+     
       if (response.data.Message === "User ajouter avec Success") {
-        console.log(response)
+        
         alert('register successful')
         navigate('/login')
         setMsg(response.data.Message)
       } else {
-        console.log(response.data.Message)
+       
         setMsg(response.data.Message)
         setErrors(Validation(inputs))
+        setErrors([]);
       }
      }catch(err){
       console.log(err)

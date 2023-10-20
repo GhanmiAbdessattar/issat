@@ -1,11 +1,32 @@
-import Table from "react-bootstrap/Table";
-import React from "react";
-import { Modal, Space } from "antd";
+import Table from 'react-bootstrap/Table';
+import React, { useEffect, useState } from 'react';
+import {Modal, Space } from "antd";
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { Button } from 'antd';
 import EnseignantDetail from "./EnseignantDetail";
 
 const Enseignant = () => {
+
+  const [enseignantData, setEnseignantData] = useState([]);
+  useEffect(() => {
+    // Make an API request to fetch student data
+    fetch('/auth/getEnseignant')
+      .then((response) => response.json())
+      .then((data) => {
+     
+        if (data.enseignants && Array.isArray(data.enseignants)) {
+         
+          setEnseignantData(data.enseignants);
+          console.log(data.enseignants)
+        } else {
+          console.error('Invalid data format: "enseignants" array not found or not an array.');
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
   const { confirm } = Modal;
   const showConfirm = () => {
     confirm({
@@ -56,16 +77,17 @@ const Enseignant = () => {
             <th>Action</th>
           </tr>
         </thead>
+
         <tbody>
-          <tr>
-            <td>01</td>
-            <td>Harbaoui Roudayna</td>
-            <td>Télécommunication</td>
-            <td>Reseaux</td>
-            <td>Harbaouiroudayna@gmail.com</td>
-            <td>20480465</td>
-            <td>
-            <div className="d-flex">
+          {enseignantData.map((student, index) => (
+            <tr key={student.id}>
+              <td>{index + 1}</td>
+              <td>{student.mat_cin}</td>
+              <td>{student.nom_fr + ' ' + student.prenom_fr}</td>
+              <td>{student.passeport}</td>
+              <td>{student.specialite}</td>
+              <td>
+              <div className="d-flex">
               <Space wrap>
                    <Button  success size={"small"}  onClick={showConfirm}>Détail</Button>
                 </Space>
@@ -74,67 +96,14 @@ const Enseignant = () => {
                 </Space>
 
               </div>
-            </td>
-          </tr>
-          <tr>
-            <td>02</td>
-            <td>GHANMI ABDESSATAR</td>
-            <td>Télécommunication</td>
-            <td>Reseaux</td>
-            <td>ghanmiabdessattar1@gmail.com</td>
-            <td>20480465</td>
-            <td>
-            <div className="d-flex">
-              <Space wrap>
-                   <Button  success size={"small"}  onClick={showConfirm}>Détail</Button>
-                </Space>
-                <Space wrap>
-                   <Button danger size={"small"} onClick={showDeleteConfirm}>Supprimer</Button>
-                </Space>
 
-              </div>
-            </td>
-          
-          </tr>
-          <tr>
-            <td>03</td>
-            <td>Harbaoui Roudayna</td>
-            <td>Télécommunication</td>
-            <td>Reseaux</td>
-            <td>Harbaouiroudayna@gmail.com</td>
-            <td>20480465</td>
-            <td>
-            <div className="d-flex">
-              <Space wrap>
-                   <Button  success size={"small"}  onClick={showConfirm}>Détail</Button>
-                </Space>
-                <Space wrap>
-                   <Button danger size={"small"} onClick={showDeleteConfirm}>Supprimer</Button>
-                </Space>
-
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>04</td>
-            <td>GHANMI ABDESSATAR</td>
-            <td>Electronique</td>
-            <td>Electronique</td>
-            <td>ghanmiabdessattar1@gmail.com</td>
-            <td>20480465</td>
-            <td>
-            <div className="d-flex">
-              <Space wrap>
-                   <Button  success size={"small"}  onClick={showConfirm}>Détail</Button>
-                </Space>
-                <Space wrap>
-                   <Button danger size={"small"} onClick={showDeleteConfirm}>Supprimer</Button>
-                </Space>
-
-              </div>
-            </td>
-          </tr>
+              </td>
+           
+            </tr>
+          ))}
         </tbody>
+
+        
       </Table>
     </div>
   );

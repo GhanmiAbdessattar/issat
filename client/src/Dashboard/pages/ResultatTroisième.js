@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 import axios from "axios";
+import Resultat from "../components/Resultat";
 
 const ResultatTroisième = () => {
 
@@ -90,6 +91,15 @@ const ResultatTroisième = () => {
         {uploadedFile && <label>uploadedFile: {uploadedFile}</label>}
         {error && <p>Error uploading file: {error}</p>}
       </Card>
+
+      <br/>
+        <div >
+
+        <Card>
+              <Resultat/>
+
+        </Card>
+        </div>
     </div>
   );
 };

@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 import axios from "axios";
+import Resultat from "../components/Resultat";
 
 
 
@@ -25,7 +26,7 @@ const ResultatPremiere = () => {
   */
   const [uploadedFile, setUploadedFile] = useState('');
   const [file, setFile] = useState('');
-  const [error, setError] = useState();
+  const [error, setError] = useState('');
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -99,6 +100,14 @@ const ResultatPremiere = () => {
           </Stack>
           
         </Card>
+        <br/>
+        <div >
+
+        <Card>
+              <Resultat/>
+
+        </Card>
+        </div>
 
     </div>
   );

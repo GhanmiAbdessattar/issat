@@ -3,7 +3,7 @@ import Table from "react-bootstrap/Table";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const Module = () => {
+const Resultat = () => {
 
   const [notes, setNotes] = useState([]);
   const cin = localStorage.getItem("userCin");
@@ -23,14 +23,12 @@ const Module = () => {
         <thead>
           <tr>
             <th>N°</th>
-            <th>Code_Ue</th>
-            <th>Module</th>
-            <th>Credit</th>
-            <th>Coef</th>
-            <th>Nat</th>
-            <th>Rg</th>
-            <th>Moy</th>
-            <th>Detail</th>
+            <th>Code etudiant</th>
+            <th>Nom et prénom</th>
+            <th>Niveau</th>
+            <th>Groupe d'enseignement</th>
+            <th>Semestre</th>
+           
           </tr>
         </thead>
         <tbody>
@@ -40,9 +38,7 @@ const Module = () => {
             <td>{note.matiere}</td>
             <td>{note.credits}</td>
             <td>{note.note_expose}</td>
-            <td>{note.note_oral}</td>
-            <td>{note.note_oral}</td>
-            <td>{note.moyenne}</td>
+            
             <td>
               <Link to="DetailModule" >Detail</Link>
                {/*  ${note.module_id}   tawali tzid hathy fi lien detaail ki tekmel 5idma ama inty mouch 3amel rabet module w note maba3thoum fi base lazem ytrabtou twa bich injiblik mili table  notes w khaw  */}
@@ -58,4 +54,4 @@ const Module = () => {
   );
 };
 
-export default Module;
+export default Resultat;

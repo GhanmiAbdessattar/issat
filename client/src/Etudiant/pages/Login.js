@@ -15,10 +15,9 @@ const Login = () => {
     email: "",
     password: ""
   })
-  //const [LoginStatut, setLoginStatus] = useState(false)
 
   const [errors, setErrors] = useState([]);
-  const [msg, setMsg] = useState([]);
+  const [msg, setMsg] = useState("");
 
 
   const handleInput = (e) => {
@@ -26,37 +25,39 @@ const Login = () => {
     //setErrors(Validation(inputs))
   }
 
-
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log(inputs);
+    
     
    try{
     const response = await axios.post("/auth/login", inputs);
-    console.log(response.data.Message)
+    
     if (response.data.Message === "Success") {
-      console.log(response)
       const token = response.data.token
-      const cin = response.data.cin
-      const nom = response.data.nom
-      const prenom = response.data.prenom
-      const statut = response.data.statut
+
+      const etudiantData = response.data.etudiant;
+      const [id, cin, role, statut] = etudiantData;
+
       alert('Login successful')
-      navigate("/acceuil");
+
+      localStorage.setItem("userCIN", cin);
+      localStorage.setItem("id", id);
       localStorage.setItem('token', token)
-      localStorage.setItem('cin', cin)
-      localStorage.setItem('nom', nom)
-      localStorage.setItem('prenom', prenom)
-      localStorage.setItem('statut', statut)
-      console.log(token)
+      localStorage.setItem('Role', role)
+      localStorage.setItem('Statut', statut)
+
       setMsg(response.data.Message)
 
+     if (role === "etudiant") {
+        navigate("/acceuil");
+      } else if (role === "agent" || role === "admin") {
+        navigate("/admin/acceuil"); // Modifier le chemin si nécessaire
+      }
     } else {
-      console.log(response.data.Message)
-      setMsg(response.data.Message)
       setErrors(Validation(inputs))
+      setMsg(response.data.Message);
+      setErrors([]);
     }
-
    }catch(err){
     console.log(err)
    }
@@ -84,6 +85,7 @@ const Login = () => {
             },
           ]}
           >
+            <div>
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
               placeholder="Email"
@@ -92,6 +94,7 @@ const Login = () => {
               onChange={handleInput}
             />
             {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
+            </div>
 
 
           </Form.Item>
@@ -105,6 +108,7 @@ const Login = () => {
               },
             ]}
           >
+            <div>
             <Input
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
@@ -115,6 +119,7 @@ const Login = () => {
               onChange={handleInput}
             />
             {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
+            </div>
 
           </Form.Item>
 

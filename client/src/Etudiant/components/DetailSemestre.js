@@ -15,7 +15,7 @@ const DetailSemestre = () => {
                 <Link to="/acceuil">Acceuil</Link>
               </li>
               <li className="breadcrumb-item">
-                <Link to="/mesnotes">Mes Notes</Link>
+                <Link to="/acceuil/mesnotes">Mes Notes</Link>
               </li>
               <li className="breadcrumb-item active" aria-current="page">
                 Module

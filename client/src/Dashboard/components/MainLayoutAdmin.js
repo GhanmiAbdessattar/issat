@@ -75,7 +75,7 @@ const MainLayoutAdmin = () => {
         <div className="logo">
           <h4 className="text-white fs-5 text-center py-2 mb-0">
             <span className="sm-logo">ISSAT Mateur</span>
-            <span className="lg-logo">Logitheque</span>
+            <span className="lg-logo">ISSAT INFO</span>
           </h4>
         </div>
 

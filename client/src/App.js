@@ -33,6 +33,7 @@ import Calendrier from "./Dashboard/pages/Calendrier";
 import ListeParcours from "./Dashboard/pages/ListeParcours";
 import ListeMatieres from "./Dashboard/pages/ListeMatieres";
 import Acceuil from "./Etudiant/pages/Acceuil";
+import DetailModule from "./Etudiant/components/DetailModule";
 
 
 function App() {
@@ -48,8 +49,9 @@ function App() {
         <Routes>
           <Route path="/acceuil" element={<MainLayout />}>
                 <Route path="acceuil" element={<Acceuil />} />
-                <Route path="/acceuil/mesnotes" element={<MesNotes />} />
-                <Route path="/acceuil/DetailSemestre" element={<DetailSemestre />} />
+                <Route path="mesnotes" element={<MesNotes />} />
+                <Route path="mesnotes/DetailSemestre" element={<DetailSemestre />} />
+                <Route path="mesnotes/DetailSemestre/DetailModule" element={<DetailModule />} />
                 
                 <Route path="Emploi" element={<Emploi />} />
                 <Route path="profile" element={<Profile />} />

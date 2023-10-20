@@ -1,6 +1,7 @@
 import { db } from "../db.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { now } from "mongoose";
 import multer from "multer";
 import XLSX from 'xlsx';
 
@@ -15,7 +16,7 @@ export const ajoutetudiant = ( req, res) => {
 
     if (data.length>0){
          // Insérez les données dans la base de données MySQL
-    const sql = 'INSERT INTO issat2.etudiant (Num_inscription, mat_cin, nom_ar, prenom_ar, nom_fr, prenom_fr, sexe, situation_familiale, date_naissance, lieu_naiss_ar, lieu_naiss_fr, statut, passeport, Adresse_Francais, Adresse_Arabe, Code_gouvernera, Email, Telephone_Fixe, Telephone_Portable, Code_Nature_Bac ) VALUES ?';
+    const sql = 'INSERT INTO issat2.etudiant (Num_inscription, mat_cin, nom_ar, prenom_ar, nom_fr, prenom_fr, sexe, situation_familiale, date_naissance, lieu_naiss_ar, lieu_naiss_fr, statut, passeport, Adresse_Francais, Adresse_Arabe, Code_gouvernera, Email, Telephone_Fixe, Telephone_Portable, Code_Nature_Bac, statut_etud, diplome, parcours, domaine, mention, specialite ) VALUES ?';
     const values = data.map((row) => [
       row['Num_inscription'],
       row['mat_(cin)'],
@@ -37,6 +38,11 @@ export const ajoutetudiant = ( req, res) => {
       row['Telephone_Fixe'],
       row['Telephone_Portable'],
       row['Code_Nature_Bac'],
+      row['statut_etud'],
+      row['diplome'],
+      row['domaine'],
+      row['mention'],
+      row['specialite'],
      
     ]);
   
@@ -178,7 +184,7 @@ export const ajoutuser = ( req, res) => {
 
   if (data.length>0){
        // Insérez les données dans la base de données MySQL
-  const sql = 'INSERT INTO issat2.enseignant (Num_inscription, mat_cin, nom_ar, prénom_ar, nom_fr, prénom_fr, sexe, situation_familiale, date_naissance, lieu_naiss_ar, lieu_naiss_fr, statut, passeport, Adresse_Francais, Adresse_Arabe, Code_gouvernera, Email, Telephone_Fixe, Telephone_Portable, Code_Nature_Bac ) VALUES ?';
+  const sql = 'INSERT INTO issat2.enseignant (Num_inscription, mat_cin, nom_ar, prénom_ar, nom_fr, prénom_fr, sexe, situation_familiale, date_naissance, lieu_naiss_ar, lieu_naiss_fr, statut, passeport, Adresse_Francais, Adresse_Arabe, Code_gouvernera, Email, Telephone_Fixe, Telephone_Portable, Code_Nature_Bac, statut_etud, diplome, domaine, mention, specialite ) VALUES ?';
   const values = data.map((row) => [
     row['Num_inscription'],
     row['mat_(cin)'],
