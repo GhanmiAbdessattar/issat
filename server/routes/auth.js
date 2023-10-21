@@ -1,7 +1,7 @@
 import express from "express"
 import multer from "multer";
 import bodyParser from "body-parser"
-import { register, login, logout, listetudiant,verifyToken } from "../controllers/auth.js";
+import { register, login, listetudiant,logout, Enseignant, detailnote, getNotes } from "../controllers/auth.js";
 import jwt from "jsonwebtoken";
 
 
@@ -27,7 +27,11 @@ const router = express.Router()
 router.post("/register", register)
 router.post("/login", login)
 router.get("/logout", logout)
-router.post("/isEtudientAuth", verifyJWT ,verifyToken)
+router.get("/enseignant/", Enseignant)
+router.get("/detailnote/", detailnote)
+router.get("/getNotes/:cin", getNotes)
+
+//router.post("/isEtudientAuth", verifyJWT ,verifyToken)
 
 
 

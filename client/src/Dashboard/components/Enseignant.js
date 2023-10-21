@@ -1,11 +1,35 @@
 import Table from "react-bootstrap/Table";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Space } from "antd";
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { Button } from 'antd';
 import EnseignantDetail from "./EnseignantDetail";
 
 const Enseignant = () => {
+
+  const [enseignantData, setEnseignantData] = useState([]);
+
+  useEffect(() => {
+   
+    fetch('/auth/enseignant')
+      .then((response) => response.json())
+      .then((data) => {
+     
+        if (data.enseignant && Array.isArray(data.enseignant)) {
+         
+          setEnseignantData(data.enseignant);
+          //console.log("enseignant",data.enseignant)
+        } else {
+          console.error('Invalid data format: "Enseignant" array not found or not an array.');
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
+
+
   const { confirm } = Modal;
   const showConfirm = () => {
     confirm({
@@ -57,17 +81,18 @@ const Enseignant = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>01</td>
-            <td>Harbaoui Roudayna</td>
-            <td>Télécommunication</td>
-            <td>Reseaux</td>
-            <td>Harbaouiroudayna@gmail.com</td>
-            <td>20480465</td>
-            <td>
+          {enseignantData.map((enseignant, index) => (
+            <tr key={enseignant.id_ens}>
+              <td>{index + 1}</td>
+              <td>{enseignant.Nom } {enseignant.Prenom}</td>
+              <td>{enseignant.Departement}</td>
+              <td>{enseignant.Specialite}</td>
+              <td>{enseignant.Email}</td>
+              <td>{enseignant.Tel}</td>
+              <td>
             <div className="d-flex">
               <Space wrap>
-                   <Button  success size={"small"}  onClick={showConfirm}>Détail</Button>
+                   <Button   success size={"small"}  onClick={showConfirm}>Détail</Button>
                 </Space>
                 <Space wrap>
                    <Button danger size={"small"} onClick={showDeleteConfirm}>Supprimer</Button>
@@ -75,66 +100,12 @@ const Enseignant = () => {
 
               </div>
             </td>
-          </tr>
-          <tr>
-            <td>02</td>
-            <td>GHANMI ABDESSATAR</td>
-            <td>Télécommunication</td>
-            <td>Reseaux</td>
-            <td>ghanmiabdessattar1@gmail.com</td>
-            <td>20480465</td>
-            <td>
-            <div className="d-flex">
-              <Space wrap>
-                   <Button  success size={"small"}  onClick={showConfirm}>Détail</Button>
-                </Space>
-                <Space wrap>
-                   <Button danger size={"small"} onClick={showDeleteConfirm}>Supprimer</Button>
-                </Space>
-
-              </div>
-            </td>
-          
-          </tr>
-          <tr>
-            <td>03</td>
-            <td>Harbaoui Roudayna</td>
-            <td>Télécommunication</td>
-            <td>Reseaux</td>
-            <td>Harbaouiroudayna@gmail.com</td>
-            <td>20480465</td>
-            <td>
-            <div className="d-flex">
-              <Space wrap>
-                   <Button  success size={"small"}  onClick={showConfirm}>Détail</Button>
-                </Space>
-                <Space wrap>
-                   <Button danger size={"small"} onClick={showDeleteConfirm}>Supprimer</Button>
-                </Space>
-
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>04</td>
-            <td>GHANMI ABDESSATAR</td>
-            <td>Electronique</td>
-            <td>Electronique</td>
-            <td>ghanmiabdessattar1@gmail.com</td>
-            <td>20480465</td>
-            <td>
-            <div className="d-flex">
-              <Space wrap>
-                   <Button  success size={"small"}  onClick={showConfirm}>Détail</Button>
-                </Space>
-                <Space wrap>
-                   <Button danger size={"small"} onClick={showDeleteConfirm}>Supprimer</Button>
-                </Space>
-
-              </div>
-            </td>
-          </tr>
+            </tr>
+          ))}
         </tbody>
+
+
+        
       </Table>
     </div>
   );

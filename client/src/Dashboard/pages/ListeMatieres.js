@@ -5,7 +5,6 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 import axios from 'axios';
-import Parcours from "../components/Parcours";
 
 
 const ListeMatieres = () => {
@@ -96,7 +95,6 @@ const ListeMatieres = () => {
       <Card>
       <div className="mt-4">
                <h4 className="mb-4"> Liste des Matieres:</h4>
-               <Parcours/>
       </div>
       </Card>
     </div>

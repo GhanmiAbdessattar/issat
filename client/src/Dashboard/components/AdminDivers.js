@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
 import Stack from 'react-bootstrap/esm/Stack';
 
-function EmploiCard() {
+function AdminDivers() {
   return (
     <CardGroup>
       <Card>
@@ -53,7 +53,7 @@ function EmploiCard() {
           </Card.Text>
         </Card.Body>
         <Card.Footer>
-        <div>
+          <div>
           <small className="text-muted">Last updated 3 mins ago</small>
           </div>
           <Stack gap={3} className="col-md-6 mx-auto">
@@ -65,4 +65,4 @@ function EmploiCard() {
   );
 }
 
-export default EmploiCard;
+export default AdminDivers;

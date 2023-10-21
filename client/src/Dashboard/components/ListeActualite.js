@@ -3,7 +3,7 @@ import React from "react";
 import { Space } from "antd";
 import { Button } from 'antd';
 
-const Parcours = () => {
+const ListeActualite = () => {
 
   return (
     <div>
@@ -103,4 +103,4 @@ const Parcours = () => {
   );
 };
 
-export default Parcours;
+export default ListeActualite;

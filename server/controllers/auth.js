@@ -134,16 +134,6 @@ export const login = (req, result) => {
 
 }
 
-export const logout = (req, res) => {
-    res.clearCookie('token')
-    cookie.remove("token")
-    console.log(res)
-    return res.json({ Status: "Success" });
-
-}
-
-
-
 
 export const listetudiant = (req, res) => {
 
@@ -175,30 +165,72 @@ export const verifyToken = (req, res, next) => {
     return 
 };
 
-export const getUser = async (req,res,next)=>{
-    const etudiantId = req.params;
-    console.log(etudiantId)
-    let etudiant;
-    try{
-        const  sql = 'SELECT * FROM issat2.etudiant WHERE mat_cin = ?';
-        console.log("ID etud",etudiantId)
-    db.query(sql, [etudiantId], (err, results) => {
+
+ export const logout = (req, res) => {
+    res.clearCookie('mytoken')
+    cookie.remove("mytoken")
+    localStorage.remove("token")
+    console.log(res)
+    return res.json({ Status: "Success" });
+  
+  }
+  
+  
+  export const Enseignant =  (req, res) => {
+
+    const  sql = 'SELECT * FROM issat2.enseignant';
+     db.query(sql, (err, results) => {
+      if (err) {
+        console.error('Erreur lors de la récupération des données de l\'enseignant :', err);
+        res.status(404).json({ Message: 'Erreur lors de la récupération des données de l\'enseignant' });
+      } else {
+  
         console.log("resultat:", results);
-        const etudiant= results[0]
-        console.log("etud:", etudiant);
+        
         //res.json({ etudiant: results });
-        return res.status(200).json({ Message: " Etudiant recuperer avec Success",   etudiant: etudiant });
-  });
+        return res.status(200).json({ Message: " Enseignant recuperer avec Success",   enseignant: results });
+  
+      }
+    });
+  
+  }
+  
+  export const detailnote =  (req, res) => {
 
-    }catch(err){
-        console.log("err");
+    const  sql = 'SELECT * FROM issat2.note_principale';
+     db.query(sql, (err, results) => {
+      if (err) {
+        console.error('Erreur lors de la récupération des données de l\'enseignant :', err);
+        res.status(404).json({ Message: 'Erreur lors de la récupération des données de l\'enseignant' });
+      } else {
+  
+        console.log("resultat:", results);
+        
+        //res.json({ etudiant: results });
+        return res.status(200).json({ Message: " Tous les notes sont recuperer avec Success",   Notes: results });
+  
+      }
+    });
+  
+  }
 
+  export const getNotes= async (req, res) => {
+    const cin = req.params.cin;
+    try {
+        const sql = 'SELECT * FROM issat2.note_principale WHERE cin = ?';
+        db.query(sql, [cin], (err, results) => {
+            if (err) {
+                console.error('Erreur lors de la récupération des notes de l\'étudiant :', err);
+                return res.status(500).json({ Message: 'Erreur lors de la récupération des notes de l\'étudiant' });
+            } else {
+                const Notes = results;
+                return res.status(200).json({ Message: "Notes de l'étudiant récupérées avec succès", Notes });
+            }
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ Message: 'Erreur interne du serveur' });
     }
+    };
 
-    if(!etudiant){
-        return res.status(404).json({ Message: " user not found" });
-    }
-   // return res.status(200).json({ Message: " Etudiant recuperer avec Success",   etudiant: etudiant });
-
-
-}
+ 

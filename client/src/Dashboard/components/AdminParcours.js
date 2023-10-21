@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
 import Stack from 'react-bootstrap/esm/Stack';
 
-function EmploiCard() {
+function AdminParcours() {
   return (
     <CardGroup>
       <Card>
@@ -65,4 +65,4 @@ function EmploiCard() {
   );
 }
 
-export default EmploiCard;
+export default AdminParcours;

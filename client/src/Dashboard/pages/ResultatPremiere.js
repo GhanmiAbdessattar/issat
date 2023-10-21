@@ -50,7 +50,7 @@ const ResultatPremiere = () => {
       console.log("invalid file type")
       setError("invalid file type")
     } else {
-      await axios.post('/ajout/ajoutresultat', formData, config).then((response) => {
+      await axios.post('/ajout/ajoutnotes', formData, config).then((response) => {
         setUploadedFile("Données importées avec succès")
         console.log(response.data)
       }).catch((error) => {

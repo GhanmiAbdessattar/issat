@@ -1,9 +1,32 @@
 import { Card } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import PhotoProfile from "../components/PhotoProfile";
+import axios from 'axios';
+
 
 const Profile = () => {
+
+
+  const [etudiantData, setEtudiantData] = useState({});
+
+  useEffect(() => {
+    // Récupérer le numéro CIN depuis le local storage
+    const cin = localStorage.getItem('cin');
+
+    if (cin) {
+      // Faire une requête pour obtenir les données de l'étudiant
+      axios
+        .get(`/getEtudiant/etudiant/${cin}`)
+        .then((response) => {
+          setEtudiantData(response.data.etudiant);
+        })
+        .catch((error) => {
+          console.error('Erreur lors de la récupération des données de l\'étudiant :', error);
+        });
+    }
+  }, []);
+
   return (
     <div>
       <div className="container">
@@ -39,9 +62,9 @@ const Profile = () => {
                           className="rounded-circle img-fluid"
                           style={{ width: "50px;" }}
                         />
-                        <h5 className="my-3">Ghanmi Abdessattar</h5>
+                        <h5 className="my-3"> {etudiantData.nom_fr} {etudiantData.prenom_fr}</h5>
                         <p className="text-muted mb-1">
-                          MP-EN-Réseaux et Télécommunication
+                        {etudiantData.passeport}
                         </p>
                         <hr />
                         <div>
@@ -65,7 +88,7 @@ const Profile = () => {
                           </div>
                           <div className="col-sm-9">
                             <p className="text-muted mb-0">
-                              Ghanmi Abdessattar
+                            {etudiantData.nom_fr} {etudiantData.prenom_fr}
                             </p>
                           </div>
                         </div>
@@ -75,7 +98,7 @@ const Profile = () => {
                             <p className="mb-0">Numéro CIN</p>
                           </div>
                           <div className="col-sm-9">
-                            <p className="text-muted mb-0">11350198</p>
+                            <p className="text-muted mb-0">{etudiantData.mat_cin}</p>
                           </div>
                         </div>
                         <hr />
@@ -84,7 +107,7 @@ const Profile = () => {
                             <p className="mb-0">Date de naissance</p>
                           </div>
                           <div className="col-sm-9">
-                            <p className="text-muted mb-0">25/06/1993</p>
+                            <p className="text-muted mb-0">{etudiantData.date_naissance}</p>
                           </div>
                         </div>
                         <hr />
@@ -93,7 +116,7 @@ const Profile = () => {
                             <p className="mb-0">Sexe</p>
                           </div>
                           <div className="col-sm-9">
-                            <p className="text-muted mb-0">Masculin</p>
+                            <p className="text-muted mb-0">{etudiantData.sexe}</p>
                           </div>
                         </div>
                         <hr />
@@ -102,7 +125,7 @@ const Profile = () => {
                             <p className="mb-0">Num Inscription</p>
                           </div>
                           <div className="col-sm-9">
-                            <p className="text-muted mb-0">1122334455</p>
+                            <p className="text-muted mb-0">{etudiantData.Num_inscription}</p>
                           </div>
                         </div>
                         <hr />
@@ -112,7 +135,7 @@ const Profile = () => {
                           </div>
                           <div className="col-sm-9">
                             <p className="text-muted mb-0">
-                              MP-EN-Réseaux et Télécommunication
+                            {etudiantData.diplome}
                             </p>
                           </div>
                         </div>
@@ -120,10 +143,10 @@ const Profile = () => {
 
                         <div className="row">
                           <div className="col-sm-3">
-                            <p className="mb-0">Cycle</p>
+                            <p className="mb-0">Domaine</p>
                           </div>
                           <div className="col-sm-9">
-                            <p className="text-muted mb-0">3</p>
+                            <p className="text-muted mb-0">{etudiantData.domaine}</p>
                           </div>
                         </div>
                         <hr />
@@ -132,7 +155,7 @@ const Profile = () => {
                             <p className="mb-0">Niveau d'études</p>
                           </div>
                           <div className="col-sm-9">
-                            <p className="text-muted mb-0">1</p>
+                            <p className="text-muted mb-0">{etudiantData.passeport}</p>
                           </div>
                         </div>
                         <hr />
@@ -142,7 +165,7 @@ const Profile = () => {
                           </div>
                           <div className="col-sm-9">
                             <p className="text-muted mb-0">
-                              1 ère MP RT(Nouveaux)
+                            {etudiantData.specialite}
                             </p>
                           </div>
                         </div>
@@ -153,7 +176,7 @@ const Profile = () => {
                           </div>
                           <div className="col-sm-9">
                             <p className="text-muted mb-0">
-                              ghanmiabdessattar1@gmail.com
+                            {etudiantData.Email}
                             </p>
                           </div>
                         </div>
@@ -163,7 +186,7 @@ const Profile = () => {
                             <p className="mb-0">Telephone</p>
                           </div>
                           <div className="col-sm-9">
-                            <p className="text-muted mb-0">20480465</p>
+                            <p className="text-muted mb-0">{etudiantData.Telephone_Portable}</p>
                           </div>
                         </div>
                         <hr />
@@ -173,7 +196,7 @@ const Profile = () => {
                           </div>
                           <div className="col-sm-9">
                             <p className="text-muted mb-0">
-                              Mateur 7030 Bizerte
+                            {etudiantData.Adresse_Francais}
                             </p>
                           </div>
                         </div>

@@ -18,7 +18,7 @@ const Register = () => {
   })
 
   const [errors, setErrors] = useState([]);
-  const [msg, setMsg] = useState([]);
+  const [msg, setMsg] = useState("");
 
 
   const handleInput = (e) => {

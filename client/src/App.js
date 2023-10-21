@@ -30,9 +30,15 @@ import EmploiPremiere from "./Dashboard/pages/EmploiPremiere";
 import EmploiDeuxieme from "./Dashboard/pages/EmploiDeuxieme";
 import EmploiTroisieme from "./Dashboard/pages/EmploiTroisieme";
 import Calendrier from "./Dashboard/pages/Calendrier";
-import ListeParcours from "./Dashboard/pages/ListeParcours";
-import ListeMatieres from "./Dashboard/pages/ListeMatieres";
 import Acceuil from "./Etudiant/pages/Acceuil";
+import ListeActualite from "./Dashboard/components/ListeActualite";
+import CalendrierEtudiant from "./Etudiant/pages/CalendrierEtudiant";
+import DetailModule from "./Etudiant/components/DetailModule";
+import EnseignantsEtudiant from "./Etudiant/pages/EnseignantsEtudiant";
+import ParcoursEtudiant from "./Etudiant/pages/ParcoursEtudiant";
+import DiversEtudiant from "./Etudiant/pages/DiversEtudiant";
+import Parcours from "./Dashboard/pages/Parcours";
+import Divers from "./Dashboard/pages/Divers";
 
 
 function App() {
@@ -49,14 +55,17 @@ function App() {
           <Route path="/acceuil" element={<MainLayout />}>
                 <Route path="acceuil" element={<Acceuil />} />
                 <Route path="/acceuil/mesnotes" element={<MesNotes />} />
-                <Route path="/acceuil/DetailSemestre" element={<DetailSemestre />} />
-                
+                <Route path="mesnotes/DetailSemestre" element={<DetailSemestre />} />
+                <Route path="mesnotes/DetailSemestre/DetailModule" element={<DetailModule />} />
                 <Route path="Emploi" element={<Emploi />} />
                 <Route path="profile" element={<Profile />} />
-                
                 <Route path="EditProfile" element={<EditProfile />} />
                 <Route path="quité" element={<Logout />} />
                 <Route path="resetPassword" element={<ResetPassword />} />
+                <Route path="Calendrier" element={<CalendrierEtudiant />} />
+                <Route path="Enseignants" element={<EnseignantsEtudiant />} />
+                <Route path="Parcours" element={<ParcoursEtudiant />} />
+                <Route path="Divers" element={<DiversEtudiant />} />
           </Route>
         </Routes>
         <Routes>
@@ -76,8 +85,9 @@ function App() {
           <Route path="/admin/Emploi_Deuxieme" element={<EmploiDeuxieme />} />
           <Route path="/admin/Emploi_Troisieme" element={<EmploiTroisieme />} />
           <Route path="/admin/Calendrier" element={<Calendrier />} />
-          <Route path="/admin/Parcours" element={<ListeParcours />} />
-          <Route path="/admin/Matieres" element={<ListeMatieres />} />
+          <Route path="/admin/Actualite" element={<ListeActualite />} />
+          <Route path="/admin/Parcours" element={<Parcours />} />
+          <Route path="/admin/Divers" element={<Divers />} />
           <Route path="/admin/Paramettre" element={<Parametre />} />
         </Route>
       </Routes>

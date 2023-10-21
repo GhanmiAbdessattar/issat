@@ -22,7 +22,7 @@ const DetailModule = () => {
                   <Link to="/acceuil/mesnotes">Mes Notes</Link>
                 </li>
                 <li className="breadcrumb-item">
-                  <Link to="/acceuil/DetailSemestre">Module</Link>
+                  <Link to="/acceuil/mesnotes/DetailSemestre">Module</Link>
                 </li>
                 <li className="breadcrumb-item active" aria-current="page">
                   Matiére

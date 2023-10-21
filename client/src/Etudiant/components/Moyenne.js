@@ -11,22 +11,26 @@ const Moyenne = () => {
         <tr>
           <th>Année étude</th>
           <th>Code etudiant</th>
-          <th>Nom et prénom</th>
-          <th>Groupe d'enseignement</th>
-          <th>Moyenne semestre</th>
-          <th>Crédit semestre</th>
-          <th>Rang</th>
+          <th>Moyenne semestre 1</th>
+          <th>Crédit semestre 1</th>
+          <th>Moyenne semestre 2</th>
+          <th>Crédit semestre 2</th>
+          <th>Moyenne Génerale</th>
+          <th>Crédit total</th>
+         
         </tr>
       </thead>
       <tbody>
         <tr >
           <td>2022-2023</td>
           <td>10196634</td>
-          <td></td>
-          <td>2 MP SSR</td>
           <td>12,02</td>
           <td>30</td>
-          <td>5</td>
+          <td>30</td>
+          <td>30</td>
+          <td>30</td>
+          <td>30</td>
+      
         </tr>
          
 

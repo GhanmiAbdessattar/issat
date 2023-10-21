@@ -1,10 +1,15 @@
 import { Card } from "antd";
-import React from "react";
-import Moyenne from "./Moyenne";
-import Module from "./Module";
+import React from 'react';
 import { Link } from "react-router-dom";
+import ParcoursCard from "../components/ParcoursCard";
 
-const DetailSemestre = () => {
+
+
+const ParcoursEtudiant = () => {
+
+
+
+
   return (
     <div className="container">
       <div className="row">
@@ -14,25 +19,24 @@ const DetailSemestre = () => {
               <li className="breadcrumb-item">
                 <Link to="/acceuil">Acceuil</Link>
               </li>
-              <li className="breadcrumb-item">
-                <Link to="/acceuil/mesnotes">Mes Notes</Link>
-              </li>
               <li className="breadcrumb-item active" aria-current="page">
-                Module
+                Parcours:
               </li>
             </ol>
           </nav>
         </div>
       </div>
+      
 
       <Card>
-        <Moyenne />
+        <h5 className="mb-1"> Listes des Parcours:</h5>
       </Card>
       <Card>
-        <Module />
+        <ParcoursCard/>
       </Card>
+
     </div>
   );
 };
 
-export default DetailSemestre;
+export default ParcoursEtudiant;

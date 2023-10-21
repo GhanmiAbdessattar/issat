@@ -4,22 +4,22 @@ import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
+import axios from "axios";
 //import axios from 'axios';
-import EmploiCard from "../components/EmploiCard";
-
-
+// Import the main component
+// Import the styles
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+// 
+import AdminParcours from "../components/AdminParcours";
 
-
-const Calendrier = () => {
+const Parcours = () => {
 
 
 
 const [uploadedFile, setUploadedFile] = useState('');
-const [pdfFile, setPdfFile] = useState(null);
+const [pdfFile, setPdfFile] = useState("");
 const [pdfFileError, setPdfFileError] = useState('')
-
 
 
 const [inputs, setInputs] = useState({
@@ -37,6 +37,7 @@ const handlePdfFileChange =(e)=>{
       reader.readAsDataURL(selectedFile);
       reader.onloadend = (e)=>{
         setPdfFile(e.target.result);
+        console.log(e.target)
         setPdfFileError('');
       }
     }else{
@@ -58,12 +59,11 @@ const handleChange =(e)=>{
 
 const handleSubmit = async (e) => {
   e.preventDefault()
-  if (pdfFile!==null){
-    
-  }else{
-   
-
-  }
+const formData = new FormData();
+formData.append("file", pdfFile)
+const result = await axios.post("/ajout/ajoutparcours", formData )
+console.log(result)
+  
 
 
  
@@ -84,7 +84,7 @@ const handleReset = async (e) => {
                 <Link to="/admin/acceuil">Acceuil</Link>
               </li>
               <li className="breadcrumb-item active" aria-current="page">
-              Calendrier des Examens:
+              Parcours:
               </li>
             </ol>
           </nav>
@@ -95,37 +95,34 @@ const handleReset = async (e) => {
 
       <div>
         <div className="mt-4">
-          <h5 className="mb-4"> Ajouter un Nouveau Calendrier:</h5>
+          <h5 className="mb-4"> Ajouter un Nouveau Parcours:</h5>
           <Card>
             <Form className="row g-3 needs-validation"> 
             <div className="col-md-4 position-relative">
               <div className="form-outline">
-                <label className="form-label">Session:</label>
+                <label className="form-label">Groupe:</label>
                 <Form.Select aria-label="Default select example" name="session">
                   <option></option>
-                  <option value="principale" onChange={handleChange}>Principale</option>
-                  <option value="controle" onChange={handleChange}>Controle</option>
+                  <option value="principale" onChange={handleChange}>IOT</option>
+                  <option value="principale" onChange={handleChange}>IRS</option>
+                  <option value="principale" onChange={handleChange}>GLSI</option>
+                  <option value="principale" onChange={handleChange}>TELECOM</option>
+                  <option value="principale" onChange={handleChange}>EEA-AII</option>
+                  <option value="principale" onChange={handleChange}>EEA-AT</option>
+                  <option value="principale" onChange={handleChange}>EEA-EI</option>
+                  <option value="principale" onChange={handleChange}>EEA-SE</option>
                 </Form.Select>
               </div>
             </div>
            
-            <div className="col-md-4 position-relative">
-              <div className="form-outline">
-                <label className="form-label">Semestre:</label>
-                <Form.Select aria-label="Default select example" name="semestre">
-                  <option></option>
-                  <option value="1" onChange={handleChange}>Semestre 1</option>
-                  <option value="2" onChange={handleChange}>Semestre 2</option>
-                </Form.Select>
-              </div>
-            </div>
+           
 
            
               <Form.Group controlId="formFile">
                 <Form.Label>
-                  Selectionné une Calendrier des Examens sous format PDF à ajouté:
+                  Selectionné un fichier sous format PDF à ajouté:
                 </Form.Label>
-                <Form.Control className="form-control" type="file" accept=".pdf" name='file' required onChange={handlePdfFileChange} />
+                <Form.Control className="form-control" type="file" accept=".pdf" name='pdffile' required onChange={(e) => setPdfFile(e.target.file)} />
               </Form.Group>
               <Stack gap={2}>
                 <Button  type="submit" onClick={handleSubmit} className='btn btn-submit btn-lg'>Ajouter</Button>
@@ -139,17 +136,18 @@ const handleReset = async (e) => {
         </div>
 
       </div>
-       
+        
       <Card>
-      <h5 className="mb-4"> Listes des Calendriers des Examens:</h5>
-        <EmploiCard/>
+      <h5 className="mb-2"> Listes des Parcours:</h5>
+        
       </Card>
       <Card>
-        <EmploiCard/>
+        <AdminParcours/>
+       
       </Card>
      
     </div>
   );
 };
 
-export default Calendrier;
+export default Parcours;

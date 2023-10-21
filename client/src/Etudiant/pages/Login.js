@@ -3,7 +3,7 @@ import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Form, Input, Button, Checkbox, Alert, Space } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"
-import Validation from "../components/Validation";
+//import Validation from "../components/Validation";
 
 
 const Login = () => {
@@ -18,7 +18,7 @@ const Login = () => {
   //const [LoginStatut, setLoginStatus] = useState(false)
 
   const [errors, setErrors] = useState([]);
-  const [msg, setMsg] = useState([]);
+  const [msg, setMsg] = useState("");
 
 
   const handleInput = (e) => {
@@ -29,32 +29,37 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log(inputs);
+ 
     
    try{
     const response = await axios.post("/auth/login", inputs);
-    console.log(response.data.Message)
     if (response.data.Message === "Success") {
-      console.log(response)
       const token = response.data.token
-      const cin = response.data.cin
-      const nom = response.data.nom
-      const prenom = response.data.prenom
-      const statut = response.data.statut
-      alert('Login successful')
-      navigate("/acceuil");
-      localStorage.setItem('token', token)
-      localStorage.setItem('cin', cin)
-      localStorage.setItem('nom', nom)
-      localStorage.setItem('prenom', prenom)
-      localStorage.setItem('statut', statut)
-      console.log(token)
+      const etudiantData = response.data.etudiant;
+      console.log(etudiantData)
+     // const cin = etudiantData.cin;
+     // const role = etudiantData.role;
+     // const email = etudiantData.email;
+     const [id,cin, role] = etudiantData;
+
+     
+      localStorage.setItem("token", token);
+      localStorage.setItem("id", id);
+      localStorage.setItem("cin", cin);
+      localStorage.setItem("role", role);
+      //localStorage.setItem("email", email);
+
+      alert("Login successful");
       setMsg(response.data.Message)
 
+      if (role === "etudiant") {
+        navigate("/acceuil");
+      } else if (role === "agent" || role === "admin") {
+        navigate("/admin/acceuil"); // Modifier le chemin si nécessaire
+      }
     } else {
-      console.log(response.data.Message)
-      setMsg(response.data.Message)
-      setErrors(Validation(inputs))
+      setMsg(response.data.Message);
+      setErrors([]);
     }
 
    }catch(err){

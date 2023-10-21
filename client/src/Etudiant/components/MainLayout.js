@@ -28,7 +28,11 @@ const items = [
   getItem("Acceuil", "acceuil", <PieChartOutlined />),
   getItem("Mes Notes", "mesnotes", <UserOutlined />),
   getItem("Emploi de Temps", "Emploi", <UserOutlined />),
-  getItem("Profile", "profile", <FileOutlined />),
+  getItem("Calendrier", "Calendrier", <FileOutlined />),
+  getItem("Enseignants", "Enseignants", <UserOutlined />),
+  getItem("Parcours", "Parcours", <FileOutlined />),
+  getItem("Divers", "Divers", <UserOutlined />),
+  getItem("Profile", "profile", <UserOutlined />),
   getItem("Quitter", "quité", <AiOutlineLogout />),
 ];
 

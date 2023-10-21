@@ -18,7 +18,20 @@ app.use(cors({
 }))
 // Middleware pour gérer les téléchargements de fichiers Excel
 const storage = multer.memoryStorage();
-const upload = multer({ storage });
+
+const storages = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./upload")
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() 
+    cb(null,  uniqueSuffix+file.originalname)
+  }
+})
+
+const upload = multer({ storage: storages })
+
+
 
  //Middleware pour permettre les requêtes CORS (à adapter en fonction de vos besoins)
 app.use((req, res, next) => {

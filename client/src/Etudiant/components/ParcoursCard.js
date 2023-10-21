@@ -1,9 +1,7 @@
-import { Button } from 'antd';
 import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
-import Stack from 'react-bootstrap/esm/Stack';
 
-function EmploiCard() {
+function ParcoursCard() {
   return (
     <CardGroup>
       <Card>
@@ -16,12 +14,7 @@ function EmploiCard() {
           </Card.Text>
         </Card.Body>
         <Card.Footer>
-        <div>
           <small className="text-muted">Last updated 3 mins ago</small>
-          </div>
-          <Stack gap={3} className="col-md-6 mx-auto">
-          <Button type="submit"   variant="secondary">Supprimer</Button>
-        </Stack>
         </Card.Footer>
       </Card>
       <Card>
@@ -34,12 +27,7 @@ function EmploiCard() {
           </Card.Text>
         </Card.Body>
         <Card.Footer>
-        <div>
           <small className="text-muted">Last updated 3 mins ago</small>
-          </div>
-          <Stack gap={3} className="col-md-6 mx-auto">
-          <Button type="submit"   variant="secondary">Supprimer</Button>
-        </Stack>
         </Card.Footer>
       </Card>
       <Card>
@@ -53,16 +41,11 @@ function EmploiCard() {
           </Card.Text>
         </Card.Body>
         <Card.Footer>
-        <div>
           <small className="text-muted">Last updated 3 mins ago</small>
-          </div>
-          <Stack gap={3} className="col-md-6 mx-auto">
-          <Button type="submit"   variant="secondary">Supprimer</Button>
-        </Stack>
         </Card.Footer>
       </Card>
     </CardGroup>
   );
 }
 
-export default EmploiCard;
+export default ParcoursCard;

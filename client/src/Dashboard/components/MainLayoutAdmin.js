@@ -5,7 +5,7 @@ import {
   UserOutlined,
   TeamOutlined,
 } from "@ant-design/icons";
-import { AiOutlinePicRight, AiOutlinePicLeft } from "react-icons/ai";
+import { AiOutlinePicRight, AiOutlinePicLeft, AiOutlineLogout } from "react-icons/ai";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Layout, Menu, theme } from "antd";
 import { useState } from "react";
@@ -21,11 +21,13 @@ function getItem(label, key, icon, children) {
 }
 const items = [
   getItem("Acceuil", "Acceuil", <PieChartOutlined />),
+  getItem("Actualité", "Actualite", <FileOutlined />),
   getItem("Resultat", "resultat", <UserOutlined />, [
     getItem("1er Année", "resultat-1er"),
     getItem("2 éme année", "resultat-2eme"),
     getItem("3 éme année", "resultat-3eme"),
   ]),
+  
   getItem("Emploi de Temps", "emploi", <UserOutlined />, [
     getItem("1er Année", "Emploi_Premiere"),
     getItem("2 éme année", "Emploi_Deuxieme"),
@@ -44,14 +46,11 @@ const items = [
     getItem("Ajouter Agent", "AjoutUsers"),
     getItem("Liste des Utilisateurs", "ListeUsers"),
   ]),
-  getItem("Parcours", "parcours", <FileOutlined />, [
-    getItem("Liste des Parcours", "Parcours"),
-
-  ]),
-  getItem("Matiers", "Matiers", <FileOutlined />, [
-    getItem("Liste des Matieres", "Matieres"),
-  ]),
-  getItem("Profile", "Profile", <PieChartOutlined />),
+  getItem("Parcours", "Parcours", <FileOutlined />),
+  getItem("Calendrier", "Calendrier", <FileOutlined />),
+  getItem("Divers", "Divers", <FileOutlined />),
+  getItem("Profile", "Profile", <UserOutlined />),
+  getItem("Quitter", "quité", <AiOutlineLogout />),
 ];
 
 const MainLayoutAdmin = () => {

@@ -37,7 +37,8 @@ const InfoPerso = (req, res) => {
       
         <Descriptions title="Informations Personnelles:">
           <Descriptions.Item label="Nom et Prénom">
-          {etudiantData.id}
+          {etudiantData.nom_fr}
+          {etudiantData.prenom_fr} 
             
           </Descriptions.Item>
           <Descriptions.Item label="Numéro CIN">
@@ -47,28 +48,17 @@ const InfoPerso = (req, res) => {
           {etudiantData.Num_inscription}
           </Descriptions.Item>
           <Descriptions.Item label="Diplôme">
-            MP-EN-Réseaux et Télécommunication
+          {etudiantData.diplome}
           </Descriptions.Item>
-          <Descriptions.Item label="Date de naissance">
-          {etudiantData.date_naissance}
-          </Descriptions.Item>
-          <Descriptions.Item label="Sexe">
-            {etudiantData.sexe}
-          </Descriptions.Item>
-          <Descriptions.Item label="Cycle">3</Descriptions.Item>
-          <Descriptions.Item label="Niveau d'études">1</Descriptions.Item>
+        
           <Descriptions.Item label="Spécialité">
-            1 ère MP RT(Nouveaux)
+          {etudiantData.specialite}
           </Descriptions.Item>
           <Descriptions.Item label="Email">
           {etudiantData.Email}
           </Descriptions.Item>
-          <Descriptions.Item label="Telephone">
-          {etudiantData.Telephone_Portable}
-          </Descriptions.Item>
-          <Descriptions.Item label="Année Universitaire">
-            2022/2023
-          </Descriptions.Item>
+      
+          
            
         </Descriptions>
       

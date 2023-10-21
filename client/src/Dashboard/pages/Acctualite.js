@@ -5,10 +5,11 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 import axios from 'axios';
-import Parcours from "../components/Parcours";
+import ListeAcctualite from "../components/ListeActualite";
 
 
-const ListeParcours = () => {
+const Acctualite = () => {
+  
   const acceptablefile = ["xlsx", "xls"];
   const checkFile = (name)=>{
     return acceptablefile.includes(name?.split(".").pop().toLowerCase());
@@ -96,11 +97,11 @@ const ListeParcours = () => {
       <Card>
       <div className="mt-4">
                <h4 className="mb-4"> Liste des Parcours:</h4>
-               <Parcours/>
+               <ListeAcctualite/>
       </div>
       </Card>
     </div>
   );
 };
 
-export default ListeParcours;
+export default Acctualite;

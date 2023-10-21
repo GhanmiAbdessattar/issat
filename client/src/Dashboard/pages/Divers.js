@@ -1,8 +1,9 @@
-import React from "react";
 import { Card } from "antd";
+import React from "react";
 import { Link } from "react-router-dom";
+import AdminDivers from "../components/AdminDivers";
 
-const Acceuil = () => {
+const Divers = () => {
   return (
     <div className="container">
     <div className="row">
@@ -13,20 +14,23 @@ const Acceuil = () => {
               <Link to="/admin/acceuil">Acceuil</Link>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              Acutalité
+              Divers Documents:
             </li>
           </ol>
         </nav>
       </div>
     </div>
-
- 
     
+
     <Card>
-    <h5 className="mb-2"> Acutalité:</h5>
+      <h5 className="mb-1"> Listes des documents Administratif:</h5>
     </Card>
+    <Card>
+     <AdminDivers/>
+    </Card>
+
   </div>
-);
+  );
 };
 
-export default Acceuil;
+export default Divers;

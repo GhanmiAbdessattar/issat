@@ -1,66 +1,84 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { Link } from "react-router-dom";
 
 const Module = () => {
+
+  const [DetailNote, setDetailNote] = useState([]);
+
+  useEffect(() => {
+    // Récupérer le numéro CIN depuis le local storage
+    const cin = localStorage.getItem('cin');
+    console.log(cin)
+
+    if(cin) {
+      fetch(`/auth/getNotes/${cin}`)
+      .then((response) => response.json())
+      .then((data) => {
+
+        if (data.Notes && Array.isArray(data.Notes)) {
+
+          setDetailNote(data.Notes);
+          //console.log("enseignant",data.enseignant)
+        } else {
+          console.error('Invalid data format: "Note" array not found or not an array.');
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+
+    }
+  }, []);
+
   return (
     <div>
       <Table responsive="sm">
         <thead>
           <tr>
             <th>N°</th>
-            <th>Code_Ue</th>
             <th>Module</th>
-            <th>Credit</th>
-            <th>Coef</th>
-            <th>Nat</th>
-            <th>Rg</th>
-            <th>Moy</th>
+            <th>Matiére</th>
+            <th>Examen</th>
+            <th>DS</th>
+            <th>TP</th>
+            <th>Oral</th>
+            <th>Exposé</th>
+            <th>Exercice</th>
+            <th>Autre_Pres</th>
+            <th>Autre</th>
+            <th>Moyenne</th>
+            <th>Crédit</th>
             <th>Detail</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>573199130</td>
-            <td>Systémes d'exploitation et architecture</td>
-            <td>7</td>
-            <td>3,5</td>
-            <td>Fond</td>
-            <td>MX</td>
-            <td>12</td>
-            <td>
-              <Link to="/DetailModule">Detail</Link>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>573199140</td>
-            <td>Logique et multimédia</td>
-            <td>4</td>
-            <td>3,5</td>
-            <td>Fond</td>
-            <td>MX</td>
-            <td>10</td>
-            <td>
-              <Link to="/DetailModule">Detail</Link>
-            </td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>573199120</td>
-            <td>Algorithmique et programmation 1</td>
-            <td>6</td>
-            <td>3,5</td>
-            <td>Fond</td>
-            <td>MX</td>
-            <td>8</td>
-            <td>
-              <Link to="/DetailModule">Detail</Link>
-            </td>
-          </tr>
+            {DetailNote.map((Notes, index) => (
+              
+              <tr key={Notes.id}>
+                <td>{index + 1}</td>
+                <td>{Notes.module}</td>
+                <td>{Notes.matiere}</td>
+                <td>{Notes.note_exam}</td>
+                <td>{Notes.note_ds}</td>
+                <td>{Notes.note_tp}</td>
+                <td>{Notes.note_oral}</td>
+                <td>{Notes.note_expose}</td>
+                <td>{Notes.note_exercice}</td>
+                <td>{Notes.autre_presentielle}</td>
+                <td>{Notes.autre_note}</td>
+                <td>{Notes.moyenne}</td>
+                <td>{Notes.credits}</td>
+                <td>
+                   <Link to="DetailModule">Detail</Link>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </Table>
+
+
+
     </div>
   );
 };

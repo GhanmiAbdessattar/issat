@@ -1,6 +1,6 @@
 import React from "react";
 import Semestre from "../components/Semestre";
-import InfoPerso from "../components/InfoPerso";
+import Moyenne from "../components/Moyenne";
 import { Card } from "antd";
 import { Link } from "react-router-dom";
 
@@ -23,7 +23,8 @@ const MesNotes = () => {
       </div>
       <Card>
         <div>
-          <InfoPerso />
+        <Moyenne/>
+         
         </div>
       </Card>
       <Card>
