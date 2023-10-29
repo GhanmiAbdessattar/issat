@@ -1,16 +1,37 @@
 import { Card, Col } from "antd";
 import { Descriptions } from "antd";
+import { useEffect, useState } from "react";
 
-const EtudiantConfirm = () => {
+const EtudiantConfirm = ({cin}) => {
+
+  const [etudiantDetail, setEtudiantDetail] = useState([]);
+  useEffect(() => {
+    fetch(`/getEtudiant/etudiant/${cin}`)
+      .then((response) => response.json())
+      .then((data) => {
+
+        if (data.etudiantDetail) {
+
+          setEtudiantDetail(data.etudiantDetail);
+        } else {
+          console.error('Invalid data format: "EtudiantPassif" array not found or not an array.');
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, [cin]);
+
+
   return (
     <div>
       <div className="container">
-         <Card>
-         <div className="row">
-            
+        <Card>
+          <div className="row">
+
             <div className="col-md-12">
-            <Descriptions title="Information Personnelles">
-            <Col >
+              <Descriptions title="Information Personnelles">
+                <Col >
                   <Descriptions.Item label="">
                     <div>
                       <img
@@ -21,72 +42,75 @@ const EtudiantConfirm = () => {
                       />
                     </div>
                   </Descriptions.Item>
-                  
+
                 </Col>
-                </Descriptions>
-              <Descriptions >
-              
+              </Descriptions>
+
+              {etudiantDetail.map((etudiants, index) => (
+              <Descriptions key={etudiants.id} >
+
                 <Col >
                   <Descriptions>
                     <Descriptions.Item label="Nom et Prénom">
-                      GHANMI ABDESSATAR
+                    {etudiants.nom_fr }
                     </Descriptions.Item>
                   </Descriptions>
                 </Col>
                 <Col>
                   <Descriptions>
                     <Descriptions.Item label="Num Inscription">
-                      123456
+                    {etudiants.nom_fr }
                     </Descriptions.Item>
                   </Descriptions>
                 </Col>
                 <Col>
                   <Descriptions>
                     <Descriptions.Item label="CIN">
-                      11350198
+                    {etudiants.nom_fr }
                     </Descriptions.Item>
                   </Descriptions>
                 </Col>
                 <Col >
                   <Descriptions>
                     <Descriptions.Item label="Email">
-                      ghanmiabdessattar1@gmail.com
+                    {etudiants.nom_fr }
                     </Descriptions.Item>
                   </Descriptions>
                 </Col>
                 <Col>
                   <Descriptions>
                     <Descriptions.Item label="Diplome">
-                    MP-EN-Réseaux et Télécommunication
+                    {etudiants.nom_fr }
                     </Descriptions.Item>
                   </Descriptions>
                 </Col>
                 <Col>
                   <Descriptions>
                     <Descriptions.Item label="Niveau">
-                      1
+                    {etudiants.nom_fr }
                     </Descriptions.Item>
                   </Descriptions>
                 </Col>
                 <Col>
                   <Descriptions>
                     <Descriptions.Item label="Spécialité">
-                    1 ère MP RT(Nouveaux)
+                    {etudiants.nom_fr }
                     </Descriptions.Item>
                   </Descriptions>
                 </Col>
                 <Col>
                   <Descriptions>
                     <Descriptions.Item label="Date Inscription">
-                      25/09/2023
+                    {etudiants.nom_fr }
                     </Descriptions.Item>
                   </Descriptions>
                 </Col>
               </Descriptions>
+                ))}
             </div>
           </div>
-         </Card>
-        </div>
+        </Card>
+      </div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import express from "express"
 //import { etudiant } from "../controllers/getEtudiant.js";
 
-import { getUser,getAllStudents, getAlluser, getNotesByCIN } from "../controllers/GetEtudiant.js";
+import { getUser,getAllStudents, getAlluser, getNotesByCIN, getEtudiantPassif } from "../controllers/GetEtudiant.js";
 
 
 
@@ -11,6 +11,7 @@ router.get("/etudiant/:cin", getUser)
 //router.get("/logout", logout)
 
 router.get("/etudiant/", getAllStudents)
+router.get("/etudiantPassif/", getEtudiantPassif)
 router.get("/alluser", getAlluser);
 router.get("getNotesByCIN/:cin", getNotesByCIN);
 

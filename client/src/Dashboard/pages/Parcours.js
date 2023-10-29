@@ -1,5 +1,5 @@
-import { Card } from "antd";
-import React, { useState} from 'react';
+import React, { useState } from 'react';
+import { Alert, Card, Space } from "antd";
 import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -17,62 +17,69 @@ const Parcours = () => {
 
 
 
-const [uploadedFile, setUploadedFile] = useState('');
-const [pdfFile, setPdfFile] = useState("");
-const [pdfFileError, setPdfFileError] = useState('')
-
-
-const [inputs, setInputs] = useState({
-  session:"",
-  semestre:"",
-})
-
-//on change file
-const fileType=['application/pdf'];
-const handlePdfFileChange =(e)=>{
-  let selectedFile = e.target.files[0]
-  if (selectedFile){
-    if(selectedFile && fileType.includes(selectedFile.type)){
-      let reader = new FileReader();
-      reader.readAsDataURL(selectedFile);
-      reader.onloadend = (e)=>{
-        setPdfFile(e.target.result);
-        console.log(e.target)
-        setPdfFileError('');
-      }
-    }else{
-      setPdfFile(null)
-      setPdfFileError('Please Select Valid PDF File')
-    }
-
-  }else{
-    console.log('select your file')
+  const acceptablefile = ["pdf", "PDF"];
+  const checkFile = (name) => {
+    return acceptablefile.includes(name?.split(".").pop().toLowerCase());
   }
 
-}
-
-const handleChange =(e)=>{
-  setInputs(prev=>({...prev, [e.target.name]: e.target.value}))
-  console.log(inputs);
-}
+  const [uploadedFile, setUploadedFile] = useState('');
+  const [pdfFile, setPdfFile] = useState('');
+  const [pdfFileError, setPdfFileError] = useState('')
 
 
-const handleSubmit = async (e) => {
-  e.preventDefault()
-const formData = new FormData();
-formData.append("file", pdfFile)
-const result = await axios.post("/ajout/ajoutparcours", formData )
-console.log(result)
-  
+  const [selectedValue, setSelectedValue] = useState('')
+
+  const handleSelectChange = (e) => {
+    setSelectedValue(e.target.value)
+    console.log(selectedValue)
+  }
+
+  //on change file
+
+  const handleFileChange = (e) => {
+    setPdfFile(e.target.files[0]);
+    const datafile = e.target.files[0];
+    if (!datafile) {
+      console.log("merci de vérifier le fichier")
+      setPdfFileError(datafile)
+    }
+  }
+
+  //const fileType=['application/pdf'];
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const formData = new FormData();
+    formData.append("pdfFile", pdfFile)
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    }
+
+    if (!checkFile(pdfFile.name)) {
+      console.log("invalid file type")
+      setPdfFileError("Erreur lors de du l'upload du fichier, merci de verifier le fichier selectionnée")
+    } else {
+      await axios.post('/ajout/ajoutparcours', formData, config ).then((response) => {
+        setUploadedFile("Fichier importé avec succès")
+        console.log(response.data)
+      }).catch((error) => {
+        setPdfFileError(error)
+        setUploadedFile("Erreur lors de du l'upload du fichier, merci de verifier le fichier selectionnée: ")
+      });
+    }
 
 
- 
-};
-const handleReset = async (e) => {
-  e.preventDefault();
-  setUploadedFile('');
 
-}
+
+  };
+
+
+  const handleReset = async (e) => {
+    e.preventDefault();
+    setUploadedFile('');
+
+  }
 
   return (
     <div className="container">
@@ -84,68 +91,66 @@ const handleReset = async (e) => {
                 <Link to="/admin/acceuil">Acceuil</Link>
               </li>
               <li className="breadcrumb-item active" aria-current="page">
-              Parcours:
+                Parcours:
               </li>
             </ol>
           </nav>
         </div>
       </div>
-
-    
-
       <div>
         <div className="mt-4">
           <h5 className="mb-4"> Ajouter un Nouveau Parcours:</h5>
           <Card>
-            <Form className="row g-3 needs-validation"> 
-            <div className="col-md-4 position-relative">
-              <div className="form-outline">
-                <label className="form-label">Groupe:</label>
-                <Form.Select aria-label="Default select example" name="session">
-                  <option></option>
-                  <option value="principale" onChange={handleChange}>IOT</option>
-                  <option value="principale" onChange={handleChange}>IRS</option>
-                  <option value="principale" onChange={handleChange}>GLSI</option>
-                  <option value="principale" onChange={handleChange}>TELECOM</option>
-                  <option value="principale" onChange={handleChange}>EEA-AII</option>
-                  <option value="principale" onChange={handleChange}>EEA-AT</option>
-                  <option value="principale" onChange={handleChange}>EEA-EI</option>
-                  <option value="principale" onChange={handleChange}>EEA-SE</option>
-                </Form.Select>
-              </div>
-            </div>
-           
-           
+            <Form >
+              <div >
+                <div className="form-outline">
+                {pdfFileError && <Space direction="vertical" style={{ width: '100%', }}>
+                    <Alert message={pdfFileError} type="error" showIcon />
+                  </Space>}
 
-           
-              <Form.Group controlId="formFile">
+                  {uploadedFile && <Space direction="vertical" style={{ width: '100%', }}>
+                    <Alert message={uploadedFile} type="success" showIcon />
+                  </Space>}
+                  <label className="form-label">Groupe:</label>
+                  <Form.Select className="mb-4" aria-label="Default select example" name="session" value={selectedValue} onChange={handleSelectChange}>
+                        <option value="IRS">IRS</option>
+                        <option value="TELECOM">TELECOM</option>
+                        <option value="GLSI">GLSI</option>
+                        <option value="EEA-AII">EEA-AII</option>
+                        <option value="EEA-AT">EEA-AT</option>
+                        <option value="EEA-EI">EEA-EI</option>
+                        <option value="EEA-SE">EEA-SE</option>
+                  </Form.Select>
+                </div>
+              </div>
+              <Form.Group className="mb-5" controlId="formFile">
                 <Form.Label>
                   Selectionné un fichier sous format PDF à ajouté:
                 </Form.Label>
-                <Form.Control className="form-control" type="file" accept=".pdf" name='pdffile' required onChange={(e) => setPdfFile(e.target.file)} />
+                <br/>
+                <Form.Control  className="form-control" type="file" accept=".pdf" name='pdfFile' required onChange={handleFileChange} />
               </Form.Group>
-              <Stack gap={2}>
-                <Button  type="submit" onClick={handleSubmit} className='btn btn-submit btn-lg'>Ajouter</Button>
-                <Button type="submit" onClick={handleReset} variant="secondary">retour</Button>
-              </Stack>
+
+                <Stack gap={2} className="col-md-5 mx-auto">
+                      <Button type="submit"  onClick={handleSubmit} variant="primary">Ajouter</Button>
+                      <Button type="submit" onClick={handleReset} variant="secondary">retour</Button>
+                </Stack>
             </Form>
-            {uploadedFile && <label>uploadedFile: {uploadedFile}</label>}
-            {pdfFileError && <div className="error-msg">{pdfFileError}</div> }
 
           </Card>
         </div>
 
       </div>
-        
+
       <Card>
-      <h5 className="mb-2"> Listes des Parcours:</h5>
-        
+        <h5 className="mb-2"> Listes des Parcours:</h5>
+
       </Card>
       <Card>
-        <AdminParcours/>
-       
+        <AdminParcours />
+
       </Card>
-     
+
     </div>
   );
 };

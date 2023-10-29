@@ -49,8 +49,8 @@ export const getUser = async (req, res) => {
 
 export const getAllStudents = async (req, res) => {
   try {
-      const sql = 'SELECT * FROM etudiant';
-      db.query(sql, (err, results) => {
+      const sql = 'SELECT * FROM etudiant WHERE statut_etud=?';
+      db.query(sql,['actif'], (err, results) => {
           if (err) {
               console.error('Erreur lors de la récupération des données des étudiants :', err);
               return res.status(500).json({ Message: 'Erreur lors de la récupération des données des étudiants' });
@@ -64,6 +64,28 @@ export const getAllStudents = async (req, res) => {
       return res.status(500).json({ Message: 'Erreur interne du serveur' });
   }
 };
+
+
+export const getEtudiantPassif = async (req, res) => {
+  try {
+      const sql = 'SELECT * FROM etudiant WHERE statut_etud=?';
+      db.query(sql,['passif'], (err, results) => {
+          if (err) {
+              console.error('Erreur lors de la récupération des données des étudiants :', err);
+              return res.status(500).json({ Message: 'Erreur lors de la récupération des données des étudiants' });
+          } else {
+              const etudiantsPassif = results;
+              return res.status(200).json({ Message: "Étudiants Passifs récupérés avec succès", etudiantsPassif });
+          }
+      });
+  } catch (err) {
+      console.error(err);
+      return res.status(500).json({ Message: 'Erreur interne du serveur' });
+  }
+};
+
+
+
 export const getNotesByCIN = async (req, res) => {
 const cin = req.params.cin;
 try {

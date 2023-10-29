@@ -1,6 +1,7 @@
 import { Card } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
+import EmploiCard from "../../Dashboard/components/EmploiCard";
 
 const Emploi = () => {
   return (
@@ -19,7 +20,9 @@ const Emploi = () => {
           </nav>
         </div>
       </div>
-      <Card></Card>
+      <Card>
+        <EmploiCard/>
+      </Card>
     </div>
   );
 };

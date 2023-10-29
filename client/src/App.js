@@ -12,7 +12,6 @@ import AjoutEnseignants from "./Dashboard/pages/AjoutEnseignats";
 import AjoutEtudiants from "./Dashboard/pages/AjoutEtudiants";
 import MainLayoutAdmin from "./Dashboard/components/MainLayoutAdmin";
 import AjoutUser from "./Dashboard/pages/AjoutUser";
-import Parametre from "./Dashboard/pages/Parametre";
 import ProfileAdmin from "./Dashboard/pages/ProfileAdmin";
 import Profile from "./Etudiant/pages/Profile";
 import MainLayout from "./Etudiant/components/MainLayout";
@@ -39,6 +38,7 @@ import ParcoursEtudiant from "./Etudiant/pages/ParcoursEtudiant";
 import DiversEtudiant from "./Etudiant/pages/DiversEtudiant";
 import Parcours from "./Dashboard/pages/Parcours";
 import Divers from "./Dashboard/pages/Divers";
+import EtudiantDetail from "./Dashboard/pages/EtudiantDetail";
 
 
 function App() {
@@ -88,7 +88,7 @@ function App() {
           <Route path="/admin/Actualite" element={<ListeActualite />} />
           <Route path="/admin/Parcours" element={<Parcours />} />
           <Route path="/admin/Divers" element={<Divers />} />
-          <Route path="/admin/Paramettre" element={<Parametre />} />
+          <Route path="ListEtudiants/EtudiantDetail" element={<EtudiantDetail />} />
         </Route>
       </Routes>
       

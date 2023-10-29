@@ -28,7 +28,7 @@ const items = [
   getItem("Acceuil", "acceuil", <PieChartOutlined />),
   getItem("Mes Notes", "mesnotes", <UserOutlined />),
   getItem("Emploi de Temps", "Emploi", <UserOutlined />),
-  getItem("Calendrier", "Calendrier", <FileOutlined />),
+  getItem("Calendrier", "calendrier", <FileOutlined />),
   getItem("Enseignants", "Enseignants", <UserOutlined />),
   getItem("Parcours", "Parcours", <FileOutlined />),
   getItem("Divers", "Divers", <UserOutlined />),

@@ -32,7 +32,6 @@ const items = [
     getItem("1er Année", "Emploi_Premiere"),
     getItem("2 éme année", "Emploi_Deuxieme"),
     getItem("3 éme année", "Emploi_Troisieme"),
-    getItem("Calendrier des examens", "Calendrier"),
   ]),
   getItem("Enseignants", "enseignant", <TeamOutlined />, [
     getItem("Ajouter Enseignant", "AjoutEnseignant"),

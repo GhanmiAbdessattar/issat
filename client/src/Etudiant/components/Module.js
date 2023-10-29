@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
-import { Link } from "react-router-dom";
 
 const Module = () => {
 
@@ -49,7 +48,6 @@ const Module = () => {
             <th>Autre</th>
             <th>Moyenne</th>
             <th>Crédit</th>
-            <th>Detail</th>
           </tr>
         </thead>
         <tbody>
@@ -69,9 +67,7 @@ const Module = () => {
                 <td>{Notes.autre_note}</td>
                 <td>{Notes.moyenne}</td>
                 <td>{Notes.credits}</td>
-                <td>
-                   <Link to="DetailModule">Detail</Link>
-                </td>
+                
               </tr>
             ))}
         </tbody>

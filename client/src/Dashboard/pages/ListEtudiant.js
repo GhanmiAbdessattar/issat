@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import EtudiantListAttente from "../components/EtudiantListAttente";
-import Etudiant from "../components/Etudiant";
+import EtudiantPassif from "../components/EtudiantPassif";
+import EtudiantActif from "../components/EtudiantActif";
 
 const ListEtudiant = () => {
   return (
@@ -21,17 +21,18 @@ const ListEtudiant = () => {
         </div>
       </div>
 
-      <div>
-          <div className="mt-4">
-               <h4 className="mb-4"> Liste des Etudiants en attente confirmation:</h4>
-               <EtudiantListAttente />
-           </div>
-        
-      </div>
+    
       <div>
       <div className="mt-4">
-               <h4 className="mb-4"> Liste des Etudiants:</h4>
-               <Etudiant />
+               <h4 className="mb-4"> Liste des Etudiants Actif:</h4>
+               <EtudiantActif />
+           </div>
+      </div>
+      <br/>
+      <div>
+      <div className="mt-4">
+               <h4 className="mb-4"> Liste des Etudiants Passif:</h4>
+               <EtudiantPassif />
            </div>
       </div>
     </div>

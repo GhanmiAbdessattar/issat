@@ -29,7 +29,7 @@ const DiversEtudiant = () => {
       
 
       <Card>
-        <h5 className="mb-1"> Listes des documents Administratif:</h5>
+        <h5 className="mb-1"> Divers documents Administratif:</h5>
       </Card>
       <Card>
         <DiversCard/>

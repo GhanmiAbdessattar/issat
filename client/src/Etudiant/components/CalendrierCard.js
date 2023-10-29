@@ -1,50 +1,61 @@
-import Card from 'react-bootstrap/Card';
-import CardGroup from 'react-bootstrap/CardGroup';
+import { useEffect, useState } from 'react';
+import Table from 'react-bootstrap/Table';
+import { Link } from 'react-router-dom';
 
 function CalendrierCard() {
+
+
+  const [emploiData, setEmploiData] = useState([]);
+
+  useEffect(() => {
+
+    
+
+    fetch('/ajout/getemploi')
+      .then(async (response) => response.json())
+      .then((data) => {
+        if (data) {
+          setEmploiData(data.emploi);
+        } else {
+          console.error('Invalid data format: "Emploi" array not found or not an array.');
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
+
   return (
-    <CardGroup>
-      <Card>
-        <Card.Img variant="top" src="holder.js/100px160" />
-        <Card.Body>
-          <Card.Title>Emploi 1er Année</Card.Title>
-          <Card.Text>
-            This is a wider card with supporting text below as a natural lead-in
-            to additional content. This content is a little bit longer.
-          </Card.Text>
-        </Card.Body>
-        <Card.Footer>
-          <small className="text-muted">Last updated 3 mins ago</small>
-        </Card.Footer>
-      </Card>
-      <Card>
-        <Card.Img variant="top" src="holder.js/100px160" />
-        <Card.Body>
-          <Card.Title>Card title</Card.Title>
-          <Card.Text>
-            This card has supporting text below as a natural lead-in to
-            additional content.{' '}
-          </Card.Text>
-        </Card.Body>
-        <Card.Footer>
-          <small className="text-muted">Last updated 3 mins ago</small>
-        </Card.Footer>
-      </Card>
-      <Card>
-        <Card.Img variant="top" src="holder.js/100px160" />
-        <Card.Body>
-          <Card.Title>Card title</Card.Title>
-          <Card.Text>
-            This is a wider card with supporting text below as a natural lead-in
-            to additional content. This card has even longer content than the
-            first to show that equal height action.
-          </Card.Text>
-        </Card.Body>
-        <Card.Footer>
-          <small className="text-muted">Last updated 3 mins ago</small>
-        </Card.Footer>
-      </Card>
-    </CardGroup>
+    <div>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Groupe</th>
+            <th>Titre</th>
+            <th>Visualiser</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {emploiData.map((emploi, index) => (
+            <tr key={emploi.idemploi}>
+              <td>{index + 1}</td>
+              <td>{emploi.parcours_emp}</td>
+              <td>{emploi.groupe}</td>
+              <td><Link to={emploi.adresse}>{emploi.adresse}</Link></td>
+              <td>{emploi.semestre}</td>
+            </tr>
+
+
+          ))}
+        </tbody>
+      </Table>
+
+    </div>
+
+
   );
 }
 
