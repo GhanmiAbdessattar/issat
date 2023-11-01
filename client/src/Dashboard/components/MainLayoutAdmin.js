@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import { AiOutlinePicRight, AiOutlinePicLeft, AiOutlineLogout } from "react-icons/ai";
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import { Layout, Menu, theme } from "antd";
+import { Layout, Menu, theme ,Button } from "antd";
 import { useState } from "react";
 import { Nav, NavDropdown } from "react-bootstrap";
 const { Header, Content, Footer, Sider } = Layout;
@@ -58,7 +58,13 @@ const MainLayoutAdmin = () => {
     token: { colorBgContainer },
   } = theme.useToken();
   const navigate = useNavigate();
+  const handleLogout = () => {
+    // Supprimer le token du stockage local
+    localStorage.removeItem('token'); // Vous pouvez également utiliser sessionStorage
 
+    // Rediriger l'utilisateur vers la page de connexion
+    navigate('/login');
+  };
   return (
     <Layout
       style={{
@@ -121,20 +127,18 @@ const MainLayoutAdmin = () => {
             </div>
             <div>
               <div>
-                <Nav>
-                  <NavDropdown
-                    id="nav-dropdown-dark-example"
-                    title=""
-                    menuVariant="gary"
-                  >
-                    <NavDropdown.Item>
-                      <Link to="/admin/Profile">Profile</Link>
-                    </NavDropdown.Item>
-                    <NavDropdown.Item>
-                      <Link to="/logout">Logout</Link>
-                    </NavDropdown.Item>
-                  </NavDropdown>
-                </Nav>
+              <Nav>
+  <NavDropdown id="nav-dropdown-dark-example" title="" menuVariant="gary">
+    <NavDropdown.Item>
+      <Link to="/admin/Profile">Profile</Link>
+    </NavDropdown.Item>
+    <NavDropdown.Item>
+      <Button type="primary" onClick={handleLogout}>
+        Logout
+      </Button>
+    </NavDropdown.Item>
+  </NavDropdown>
+</Nav>
               </div>
             </div>
           </div>

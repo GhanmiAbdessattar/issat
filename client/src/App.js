@@ -41,19 +41,20 @@ import Divers from "./Dashboard/pages/Divers";
 import EtudiantDetail from "./Dashboard/pages/EtudiantDetail";
 
 
+import AuthGuard from './AuthGuard'; 
+
 function App() {
   return (
     <Router>
-     <Routes>
-           <Route path="/" element={<Login />} />
-           <Route path="login" element={<Login />} />
-           <Route path="register" element={<Register />} />
-           <Route path="forgotPassword" element={<ForgotPassword />} />
-
-     </Routes>
-        <Routes>
-          <Route path="/acceuil" element={<MainLayout />}>
-                <Route path="acceuil" element={<Acceuil />} />
+      <Routes>
+        <Route path="/" element={<AuthGuard><Login /></AuthGuard>} />
+        <Route path="login" element={<AuthGuard><Login /></AuthGuard>} />
+        <Route path="register" element={<AuthGuard><Register /></AuthGuard>} />
+        <Route path="forgotPassword" element={<AuthGuard><ForgotPassword /></AuthGuard>} />
+      </Routes>
+      <Routes>
+        <Route path="/acceuil" element={<AuthGuard><MainLayout /></AuthGuard>}>
+        <Route path="acceuil" element={<Acceuil />} />
                 <Route path="/acceuil/mesnotes" element={<MesNotes />} />
                 <Route path="mesnotes/DetailSemestre" element={<DetailSemestre />} />
                 <Route path="mesnotes/DetailSemestre/DetailModule" element={<DetailModule />} />
@@ -66,11 +67,11 @@ function App() {
                 <Route path="Enseignants" element={<EnseignantsEtudiant />} />
                 <Route path="Parcours" element={<ParcoursEtudiant />} />
                 <Route path="Divers" element={<DiversEtudiant />} />
-          </Route>
-        </Routes>
-        <Routes>
-        <Route path="/admin" element={<MainLayoutAdmin />}>
-          <Route path="/admin/Acceuil" element={<AcceuilAdmin />} />
+        </Route>
+      </Routes>
+      <Routes>
+        <Route path="/admin" element={<AuthGuard><MainLayoutAdmin /></AuthGuard>}>
+        <Route path="/admin/Acceuil" element={<AcceuilAdmin />} />
           <Route path="/admin/ListEtudiants" element={<ListEtudiant />} />
           <Route path="/admin/ListEnseignants" element={<ListEnseignant />} />
           <Route path="/admin/ListeUsers" element={<UtilisateursAdmin />} />
@@ -89,9 +90,8 @@ function App() {
           <Route path="/admin/Parcours" element={<Parcours />} />
           <Route path="/admin/Divers" element={<Divers />} />
           <Route path="ListEtudiants/EtudiantDetail" element={<EtudiantDetail />} />
-        </Route>
+          /</Route>
       </Routes>
-      
     </Router>
   );
 }
