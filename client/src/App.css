@@ -2,3 +2,58 @@
     color: red;
     font-size: 12px;
 }
+
+/* Styles pour les smartphones (petits écrans) */
+@media (max-width: 767px) {
+    /* Définir les styles appropriés pour les smartphones */
+  }
+  
+  /* Styles pour les tablettes (écrans moyens) */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    /* Définir les styles appropriés pour les tablettes */
+  }
+  
+  /* Styles pour les ordinateurs de bureau (grands écrans) */
+  @media (min-width: 1024px) {
+    /* Définir les styles appropriés pour les ordinateurs de bureau */
+  }
+  /* Add this CSS to your stylesheet or in your React component's CSS file */
+/* This CSS is just a starting point; you may need to adjust it based on your specific DataTable and design */
+
+/* Default styles for the DataTable */
+.dataTable {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1em;
+  border-collapse: collapse;
+}
+
+.dataTable thead th {
+  background-color: #f2f2f2;
+}
+
+.dataTable tbody td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+  .dataTable {
+    overflow-x: auto; /* Add horizontal scroll on small screens */
+  }
+
+  .dataTable thead {
+    display: none; /* Hide the table header on small screens */
+  }
+
+  .dataTable tbody tr {
+    display: block;
+    margin-bottom: 1em;
+  }
+
+  .dataTable tbody td {
+    display: block;
+    text-align: left;
+  }
+}

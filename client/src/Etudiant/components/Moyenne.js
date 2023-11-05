@@ -26,10 +26,10 @@ const Moyenne = () => {
           <td>10196634</td>
           <td>12,02</td>
           <td>30</td>
+          <td>12</td>
           <td>30</td>
-          <td>30</td>
-          <td>30</td>
-          <td>30</td>
+          <td>12,8</td>
+          <td>60</td>
       
         </tr>
          

@@ -16,15 +16,12 @@ import ProfileAdmin from "./Dashboard/pages/ProfileAdmin";
 import Profile from "./Etudiant/pages/Profile";
 import MainLayout from "./Etudiant/components/MainLayout";
 import MesNotes from "./Etudiant/pages/MesNotes";
-import DetailSemestre from "./Etudiant/components/DetailSemestre";
+import DetailPremSem from "./Etudiant/components/DetailPremSem";
 //import DetailModule from "./Etudiant/components/DetailModule";
 import EditProfile from "./Etudiant/pages/EditProfile";
 import Emploi from "./Etudiant/pages/Emploi";
 import ListEtudiant from "./Dashboard/pages/ListEtudiant";
 import ListEnseignant from "./Dashboard/pages/ListEnseignant";
-import ResultatPremiere from "./Dashboard/pages/ResultatPremiere";
-import ResultatDexieme from "./Dashboard/pages/ResultatDexieme";
-import ResultatTroisième from "./Dashboard/pages/ResultatTroisième";
 import EmploiPremiere from "./Dashboard/pages/EmploiPremiere";
 import EmploiDeuxieme from "./Dashboard/pages/EmploiDeuxieme";
 import EmploiTroisieme from "./Dashboard/pages/EmploiTroisieme";
@@ -39,56 +36,66 @@ import DiversEtudiant from "./Etudiant/pages/DiversEtudiant";
 import Parcours from "./Dashboard/pages/Parcours";
 import Divers from "./Dashboard/pages/Divers";
 import EtudiantDetail from "./Dashboard/pages/EtudiantDetail";
+import DetailDexiemSem from "./Etudiant/components/DetailDexiemSem";
 
+import AuthGuard from './AuthGuard'; 
+import ResultatPrincipale from "./Dashboard/pages/ResultatPrincipale";
+import ResultatRattrappage from "./Dashboard/pages/ResultatRattrappage";
+import NotesPrincipale from "./Dashboard/pages/NotesPrincipale";
+import NotesRattrappage from "./Dashboard/pages/NotesRattrappage";
 
 function App() {
   return (
     <Router>
      <Routes>
-           <Route path="/" element={<Login />} />
-           <Route path="login" element={<Login />} />
-           <Route path="register" element={<Register />} />
-           <Route path="forgotPassword" element={<ForgotPassword />} />
+     <Route path="/" element={<AuthGuard><Login /></AuthGuard>} />
+        <Route path="login" element={<AuthGuard><Login /></AuthGuard>} />
+        <Route path="register" element={<AuthGuard><Register /></AuthGuard>} />
+        <Route path="forgotPassword" element={<AuthGuard><ForgotPassword /></AuthGuard>} />
 
      </Routes>
         <Routes>
-          <Route path="/acceuil" element={<MainLayout />}>
-                <Route path="acceuil" element={<Acceuil />} />
-                <Route path="/acceuil/mesnotes" element={<MesNotes />} />
-                <Route path="mesnotes/DetailSemestre" element={<DetailSemestre />} />
-                <Route path="mesnotes/DetailSemestre/DetailModule" element={<DetailModule />} />
-                <Route path="Emploi" element={<Emploi />} />
-                <Route path="profile" element={<Profile />} />
-                <Route path="EditProfile" element={<EditProfile />} />
-                <Route path="quité" element={<Logout />} />
+          <Route path="/acceuil" element={<AuthGuard><MainLayout /></AuthGuard>}>
+                <Route path="acceuil" element={<AuthGuard><Acceuil /></AuthGuard>} />
+                <Route path="/acceuil/mesnotes" element={<AuthGuard><MesNotes /></AuthGuard>} />
+                <Route path="mesnotes/DetailPremierSemestre" element={<AuthGuard><DetailPremSem /></AuthGuard>} />
+                <Route path="mesnotes/DetailDexiemeSemestre" element={<AuthGuard><DetailDexiemSem /></AuthGuard>} />
+                <Route path="mesnotes/DetailPremierSemestre/DetailModule" element={<AuthGuard><DetailModule /></AuthGuard>} />
+                <Route path="mesnotes/DetailDexiemeSemestre/DetailModule" element={<AuthGuard><DetailModule /></AuthGuard>} />
+
+                <Route path="Emploi" element={<AuthGuard><Emploi /></AuthGuard>} />
+                <Route path="profile" element={<AuthGuard><Profile /></AuthGuard>} />
+                <Route path="EditProfile" element={<AuthGuard><EditProfile /></AuthGuard>} />
+                <Route path="quité" element={<AuthGuard><Logout /></AuthGuard>} />
                 <Route path="resetPassword" element={<ResetPassword />} />
-                <Route path="Calendrier" element={<CalendrierEtudiant />} />
-                <Route path="Enseignants" element={<EnseignantsEtudiant />} />
-                <Route path="Parcours" element={<ParcoursEtudiant />} />
-                <Route path="Divers" element={<DiversEtudiant />} />
+                <Route path="Calendrier" element={<AuthGuard><CalendrierEtudiant /></AuthGuard>} />
+                <Route path="Enseignants" element={<AuthGuard><EnseignantsEtudiant /></AuthGuard>} />
+                <Route path="Parcours" element={<AuthGuard><ParcoursEtudiant /></AuthGuard>} />
+                <Route path="Divers" element={<AuthGuard><DiversEtudiant /></AuthGuard>} />
           </Route>
         </Routes>
         <Routes>
-        <Route path="/admin" element={<MainLayoutAdmin />}>
-          <Route path="/admin/Acceuil" element={<AcceuilAdmin />} />
-          <Route path="/admin/ListEtudiants" element={<ListEtudiant />} />
-          <Route path="/admin/ListEnseignants" element={<ListEnseignant />} />
-          <Route path="/admin/ListeUsers" element={<UtilisateursAdmin />} />
-          <Route path="/admin/AjoutUsers" element={<AjoutUser />} />
-          <Route path="/admin/AjoutEnseignant" element={<AjoutEnseignants />} />
-          <Route path="/admin/AjoutEtudiant" element={<AjoutEtudiants />} />
-          <Route path="/admin/Profile" element={<ProfileAdmin />} />
-          <Route path="/admin/resultat-1er" element={<ResultatPremiere />} />
-          <Route path="/admin/resultat-2eme" element={<ResultatDexieme />} />
-          <Route path="/admin/resultat-3eme" element={<ResultatTroisième />} />
-          <Route path="/admin/Emploi_Premiere" element={<EmploiPremiere />} />
-          <Route path="/admin/Emploi_Deuxieme" element={<EmploiDeuxieme />} />
-          <Route path="/admin/Emploi_Troisieme" element={<EmploiTroisieme />} />
-          <Route path="/admin/Calendrier" element={<Calendrier />} />
-          <Route path="/admin/Actualite" element={<ListeActualite />} />
-          <Route path="/admin/Parcours" element={<Parcours />} />
-          <Route path="/admin/Divers" element={<Divers />} />
-          <Route path="ListEtudiants/EtudiantDetail" element={<EtudiantDetail />} />
+        <Route path="/admin" element={<AuthGuard><MainLayoutAdmin /></AuthGuard>}>
+          <Route path="/admin/Acceuil" element={<AuthGuard><AcceuilAdmin /></AuthGuard>} />
+          <Route path="/admin/ListEtudiants" element={<AuthGuard><ListEtudiant /></AuthGuard>} />
+          <Route path="/admin/ListEnseignants" element={<AuthGuard><ListEnseignant /></AuthGuard>} />
+          <Route path="/admin/ListeUsers" element={<AuthGuard><UtilisateursAdmin /></AuthGuard>} />
+          <Route path="/admin/AjoutUsers" element={<AuthGuard><AjoutUser /></AuthGuard>} />
+          <Route path="/admin/AjoutEnseignant" element={<AuthGuard><AjoutEnseignants /></AuthGuard>} />
+          <Route path="/admin/AjoutEtudiant" element={<AuthGuard><AjoutEtudiants /></AuthGuard>} />
+          <Route path="/admin/Profile" element={<AuthGuard><ProfileAdmin /></AuthGuard>} />
+          <Route path="/admin/resultat_Princ" element={<AuthGuard><ResultatPrincipale /></AuthGuard>} />
+          <Route path="/admin/resultat_rat" element={<AuthGuard><ResultatRattrappage /></AuthGuard>} />
+          <Route path="/admin/note_principale" element={<AuthGuard><NotesPrincipale /></AuthGuard>} />
+          <Route path="/admin/note_rattrappage" element={<AuthGuard><NotesRattrappage /></AuthGuard>} />
+          <Route path="/admin/Emploi_Premiere" element={<AuthGuard><EmploiPremiere /></AuthGuard>} />
+          <Route path="/admin/Emploi_Deuxieme" element={<AuthGuard><EmploiDeuxieme /></AuthGuard>} />
+          <Route path="/admin/Emploi_Troisieme" element={<AuthGuard><EmploiTroisieme /></AuthGuard>} />
+          <Route path="/admin/Calendrier" element={<AuthGuard><Calendrier /></AuthGuard>} />
+          <Route path="/admin/Actualite" element={<AuthGuard><ListeActualite /></AuthGuard>} />
+          <Route path="/admin/Parcours" element={<AuthGuard><Parcours /></AuthGuard>} />
+          <Route path="/admin/Divers" element={<AuthGuard><Divers /></AuthGuard>} />
+          <Route path="ListEtudiants/EtudiantDetail" element={<AuthGuard><EtudiantDetail /></AuthGuard>} />
         </Route>
       </Routes>
       

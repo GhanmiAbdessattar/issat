@@ -1,10 +1,10 @@
 import { Card } from "antd";
 import React from "react";
 import Moyenne from "./Moyenne";
-import Module from "./Module";
+import Module from "./ModulePremSem";
 import { Link } from "react-router-dom";
 
-const DetailSemestre = () => {
+const DetailPremSem = () => {
   return (
     <div className="container">
       <div className="row">
@@ -35,4 +35,4 @@ const DetailSemestre = () => {
   );
 };
 
-export default DetailSemestre;
+export default DetailPremSem;

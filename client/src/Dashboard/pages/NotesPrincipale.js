@@ -5,8 +5,9 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 import axios from "axios";
+import NotesPrincComp from "../components/NotesPrincComp";
 
-const ResultatDexieme = () => {
+const NotesPrincipale = () => {
 
   const acceptablefile = ["xlsx", "xls"];
   const checkFile = (name) => {
@@ -60,7 +61,7 @@ const ResultatDexieme = () => {
                 <Link to="/admin/acceuil">Acceuil</Link>
               </li>
               <li className="breadcrumb-item active" aria-current="page">
-                Resultat 2ème années
+               Notes du Session Principale
               </li>
             </ol>
           </nav>
@@ -70,7 +71,7 @@ const ResultatDexieme = () => {
       <Card>
         <Form.Group controlId="formFile" className="mb-3">
           <Form.Label>
-            Selectionné le fichier Excel contenant les Resultats du 2ème années:
+            Selectionné le fichier Excel contenant les Notes du Session Principale:
 
             {error && <Space direction="vertical"style={{ width: '100%',}}>
                 <Alert message={error} type="error" showIcon />
@@ -83,15 +84,18 @@ const ResultatDexieme = () => {
           <Form.Control type="file" accept=".xls, .xlsx" name='file' onChange={handleFileChange} />
         </Form.Group>
         <Stack gap={2} className="col-md-5 mx-auto">
-          <Button type="submit" variant="outline-secondary" onClick={handleSubmit}>Ajouter</Button>
+          <Button type="submit"variant="primary" onClick={handleSubmit}>Ajouter</Button>
           <Button variant="outline-secondary">Retour</Button>
         </Stack>
         {uploadedFile && <label>uploadedFile: {uploadedFile}</label>}
         {error && <p>Error uploading file: {error}</p>}
       </Card>
+      <Card>
+              <NotesPrincComp/>
 
+        </Card>
     </div>
   );
 };
 
-export default ResultatDexieme;
+export default NotesPrincipale;

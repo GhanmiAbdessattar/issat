@@ -1,3 +1,4 @@
+import Search from 'antd/es/transfer/search';
 import React, { useEffect, useState } from 'react';
 import { Table } from "react-bootstrap";
 import { Link } from 'react-router-dom';
@@ -6,6 +7,8 @@ import { Link } from 'react-router-dom';
 
 
 const EnseignantsEtudiant = () => {
+  const onSearch = (value, _e, info) => console.log(info?.source, value);
+
 
   const [enseignantData, setEnseignantData] = useState([]);
 
@@ -55,6 +58,10 @@ const EnseignantsEtudiant = () => {
       </div>
 
       <div>
+      <div className="mb-2">
+      <Search placeholder="rechercher un enseignant"    onSearch={onSearch} enterButton />
+      </div>
+   
         <Table responsive="xl">
           <thead>
             <tr>

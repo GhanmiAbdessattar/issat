@@ -5,8 +5,9 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 import axios from "axios";
+import ResRatComp from "../components/ResRatComp";
 
-const ResultatTroisième = () => {
+const ResultatRattrappage = () => {
 
   const acceptablefile = ["xlsx", "xls"];
   const checkFile = (name) => {
@@ -61,7 +62,7 @@ const ResultatTroisième = () => {
                 <Link to="/admin/acceuil">Acceuil</Link>
               </li>
               <li className="breadcrumb-item active" aria-current="page">
-                Resultat 3ème année
+                Resultat Session Rattrappage
               </li>
             </ol>
           </nav>
@@ -71,7 +72,7 @@ const ResultatTroisième = () => {
       <Card>
         <Form.Group controlId="formFile" className="mb-3">
           <Form.Label>
-            Selectionné le fichier Excel contenant les Resultats du 3ème années:
+            Selectionné le fichier Excel contenant les Resultats du Session Rattrappage:
 
             {error && <Space direction="vertical"style={{ width: '100%',}}>
                 <Alert message={error} type="error" showIcon />
@@ -84,14 +85,18 @@ const ResultatTroisième = () => {
           <Form.Control type="file" accept=".xls, .xlsx" name='file' onChange={handleFileChange} />
         </Form.Group>
         <Stack gap={2} className="col-md-5 mx-auto">
-          <Button type="submit" variant="outline-secondary" onClick={handleSubmit}>Ajouter</Button>
+          <Button type="submit" variant="primary" onClick={handleSubmit}>Ajouter</Button>
           <Button variant="outline-secondary">Retour</Button>
         </Stack>
         {uploadedFile && <label>uploadedFile: {uploadedFile}</label>}
         {error && <p>Error uploading file: {error}</p>}
       </Card>
+      <Card>
+              <ResRatComp/>
+
+        </Card>
     </div>
   );
 };
 
-export default ResultatTroisième;
+export default ResultatRattrappage;

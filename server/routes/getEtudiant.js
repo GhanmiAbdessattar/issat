@@ -1,7 +1,6 @@
 import express from "express"
 //import { etudiant } from "../controllers/getEtudiant.js";
-
-import { getUser,getAllStudents, getAlluser, getNotesByCIN, getEtudiantPassif } from "../controllers/GetEtudiant.js";
+import { getUser,getAllStudents, getAlluser, getNotesByCIN, getEtudiantPassif, getUtilisateur } from "../controllers/getEtudiant.js"
 
 
 
@@ -14,6 +13,6 @@ router.get("/etudiant/", getAllStudents)
 router.get("/etudiantPassif/", getEtudiantPassif)
 router.get("/alluser", getAlluser);
 router.get("getNotesByCIN/:cin", getNotesByCIN);
-
+router.get("getUtilisateur/:cin", getUtilisateur);
 
 export default router

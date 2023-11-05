@@ -1,24 +1,31 @@
-import Table from "react-bootstrap/Table";
 import React, { useEffect, useState } from "react";
-import { Modal, Space } from "antd";
-import { ExclamationCircleFilled } from '@ant-design/icons';
+import { Card} from "antd";
 import { Button } from 'antd';
-import EnseignantDetail from "./EnseignantDetail";
+import DataTable from "react-data-table-component";
+import axios from "axios";
 
 const Enseignant = () => {
 
-  const [enseignantData, setEnseignantData] = useState([]);
-
+  const handelDelete = (ident) =>{
+    const confirm = window.confirm("would you lik to Delete !!!")
+    if(confirm){
+      axios.delete('/auth/DeleteEnseignant/'+ident)
+      .then(res => {
+        window.location.reload(false);
+      }).catch(err => console.log(err));
+    }
+  }
+ 
   useEffect(() => {
    
     fetch('/auth/enseignant')
       .then((response) => response.json())
       .then((data) => {
      
-        if (data.enseignant && Array.isArray(data.enseignant)) {
+        if (data.enseignant) {
          
-          setEnseignantData(data.enseignant);
-          //console.log("enseignant",data.enseignant)
+          setRecord(data.enseignant);
+          setFilterRecord(data.enseignant);
         } else {
           console.error('Invalid data format: "Enseignant" array not found or not an array.');
         }
@@ -29,85 +36,66 @@ const Enseignant = () => {
   }, []);
 
 
-
-  const { confirm } = Modal;
-  const showConfirm = () => {
-    confirm({
-      title: 'Détail Enseignant',
-      icon: <ExclamationCircleFilled />,
-      content: <EnseignantDetail />,
+  const columns = [
+    {
+      name: "ID",
+      selector:row => row.Ident,
+      sortable: true
+  },
+     {
+        name: "Nom",
+        selector:row => row.Nom,
+        sortable: true
+    },
+    {
+        name: "Prénom",
+        selector:row => row.Prenom,
+        sortable: true
+    },
+    {
+        name: "Département",
+        selector:row => row.Departement,
+        sortable: true
+    },
+    {
+        name: "Email",
+        selector:row => row.Email,
+        sortable: true
+    },
+    {
+        name: "Action",
+        cell: (row)=> ( <Button className="btn btn-sm btn-primary" onClick={e =>handelDelete(row.Ident)}> Supprimer</Button>),
       
- 
-      width:'1000px',
-      onOk() {
-        console.log('OK');
-      },
-      
-    });
-  };
-
- const showDeleteConfirm = () => {
+    }
+   
+  ];
   
-  confirm({
-    title: 'Confirmer la suppression !!',
-    icon: <ExclamationCircleFilled />,
-    content:  <EnseignantDetail />,
-    okText: 'Confirmer',
-    okType: 'danger',
-    cancelText: 'Retour',
-    width:'1000px',
-    onOk() {
-      console.log('OK');
-    },
-    onCancel() {
-      console.log('Cancel');
-    },
-  });
-};
+  const [record, setRecord] = useState([]);
+  const [filterRecord, setFilterRecord] = useState([]);
+    const handelFilter =(e)=>{
+            const newData = filterRecord.filter(row => row.Nom.toLowerCase().includes(e.target.value.toLowerCase()))
+            setRecord(newData);
+    }
 
 
   return (
     <div>
-      <Table responsive="xl">
-        <thead>
-          <tr>
-            <th>N°</th>
-            <th>Nom_et_prénom</th>
-            <th>Département</th>
-            <th>Spécialité</th>
-            <th>Email</th>
-            <th>Télephonne</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {enseignantData.map((enseignant, index) => (
-            <tr key={enseignant.id_ens}>
-              <td>{index + 1}</td>
-              <td>{enseignant.Nom } {enseignant.Prenom}</td>
-              <td>{enseignant.Departement}</td>
-              <td>{enseignant.Specialite}</td>
-              <td>{enseignant.Email}</td>
-              <td>{enseignant.Tel}</td>
-              <td>
-            <div className="d-flex">
-              <Space wrap>
-                   <Button   success size={"small"}  onClick={showConfirm}>Détail</Button>
-                </Space>
-                <Space wrap>
-                   <Button danger size={"small"} onClick={showDeleteConfirm}>Supprimer</Button>
-                </Space>
+    <Card >
+            <div className='container mt-5' >
+            <div className='text-end'><input type="text" placeholder='rechercher...' onChange={handelFilter}/></div>
+            <DataTable 
+            columns={columns} 
+            data={record}
+            fixedHeader
+            pagination
+            fixedHeaderScrollHeight="550px"
+            highlightOnHover
+            
+            />
 
-              </div>
-            </td>
-            </tr>
-          ))}
-        </tbody>
-
-
-        
-      </Table>
-    </div>
+            </div>
+            </Card>
+  </div>
   );
 };
 

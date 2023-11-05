@@ -5,10 +5,11 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 import axios from "axios";
+import ResPrincComp from "../components/ResPrincComp";
 
 
 
-const ResultatPremiere = () => {
+const ResultatPrincipale = () => {
 
   const acceptablefile = ["xlsx", "xls"];
   const checkFile = (name) => {
@@ -50,7 +51,7 @@ const ResultatPremiere = () => {
       console.log("invalid file type")
       setError("invalid file type")
     } else {
-      await axios.post('/ajout/ajoutnotes', formData, config).then((response) => {
+      await axios.post('/ajout/ajoutresultatprinc', formData, config).then((response) => {
         setUploadedFile("Données importées avec succès")
         console.log(response.data)
       }).catch((error) => {
@@ -70,7 +71,7 @@ const ResultatPremiere = () => {
                 <Link to="/admin/acceuil">Acceuil</Link>
               </li>
               <li className="breadcrumb-item active" aria-current="page">
-                Resultat 1er années
+                Resultat Session Principale
               </li>
             </ol>
           </nav>
@@ -80,7 +81,7 @@ const ResultatPremiere = () => {
         <Card>
           <Form.Group controlId="formFile" className="mb-3">
             <Form.Label>
-              Selectionné le fichier Excel contenant les Resultats du 2ème années:
+              Selectionné le fichier Excel contenant les Resultats du Session Principale:
 
               {error && <Space direction="vertical"style={{ width: '100%',}}>
                 <Alert message={error} type="error" showIcon />
@@ -94,14 +95,18 @@ const ResultatPremiere = () => {
             <Form.Control type="file" accept=".xls, .xlsx" name='file' onChange={handleFileChange} />
           </Form.Group>
           <Stack gap={2} className="col-md-5 mx-auto">
-            <Button type="submit" variant="outline-secondary" onClick={handleSubmit}>Ajouter</Button>
+            <Button type="submit" variant="primary" onClick={handleSubmit}>Ajouter</Button>
             <Button variant="outline-secondary">Retour</Button>
           </Stack>
           
+        </Card>
+        <Card>
+              <ResPrincComp/>
+
         </Card>
 
     </div>
   );
 };
 
-export default ResultatPremiere;
+export default ResultatPrincipale;

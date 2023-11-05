@@ -1,9 +1,12 @@
+import Search from 'antd/es/transfer/search';
 import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
 
 
 function AdminParcours() {
+  const onSearch = (value, _e, info) => console.log(info?.source, value);
+
 
   const [parcoursData, setParcoursData] = useState([]);
 
@@ -32,6 +35,9 @@ function AdminParcours() {
 
   return (
     <div>
+      <div className="mb-2">
+      <Search placeholder="rechercher un parcour"    onSearch={onSearch} enterButton />
+      </div>
       <Table striped bordered hover>
       <thead>
         <tr>

@@ -1,15 +1,10 @@
-import Table from "react-bootstrap/Table";
 import React, { useEffect, useState } from "react";
-import { Modal, Space } from "antd";
-import { ExclamationCircleFilled } from '@ant-design/icons';
+import { Card} from "antd";
 import { Button } from 'antd';
-import EtudiantConfirm from "./EtudiantConfirm";
+//import EtudiantConfirm from "./EtudiantConfirm";
+import DataTable from "react-data-table-component";
 
 const EtudiantPassif = () => {
-
-  const [etudiantsPassifData, setEtudiantsPassifData] = useState([]);
-    const [etudCin, setEtudCin] = useState()
-  
 
   useEffect(() => {
    
@@ -18,11 +13,8 @@ const EtudiantPassif = () => {
       .then((data) => {
      
         if (data.etudiantsPassif ) {
-         
-            setEtudiantsPassifData(data.etudiantsPassif);
-            const cin = data.etudiantsPassif[1].mat_cin
-            setEtudCin(cin)
-            console.log(etudCin)
+            setRecord(data.etudiantsPassif);
+            setFilterRecord(data.etudiantsPassif);
         } else {
           console.error('Invalid data format: "EtudiantPassif" array not found or not an array.');
         }
@@ -30,76 +22,68 @@ const EtudiantPassif = () => {
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
-  }, [etudCin]);
+  }, []);
 
-  const { confirm } = Modal;
+
+const columns = [
  
-
+  {
+      name: "Nom_Prénom",
+      selector:row => row.nom_fr,
+      sortable: true
+  },
+  {
+      name: "Groupe",
+      selector:row => row.passeport,
+      sortable: true
+  },
+  {
+      name: "Diplome",
+      selector:row => row.diplome,
+      sortable: true
+  },
+  {
+      name: "Spécialité",
+      selector:row => row.specialite,
+      sortable: true
+  },
+  {
+      name: "Email",
+      selector:row => row.Email,
+      sortable: true
+  },
+  {
+      name: "Action",
+      cell: (row)=> ( <Button className="btn btn-sm btn-primary" onClick={()=>alert(row.nom_fr)}> Supprimer</Button>),
+    
+  }
  
-  
- const showDeleteConfirm = () => {
-  
-  confirm({
-    title: 'Confirmer la suppression !!',
-    icon: <ExclamationCircleFilled />,
-    content:  <EtudiantConfirm  />,
-    okText: 'Confirmer',
-    okType: 'danger',
-    cancelText: 'Retour',
-    width:'1000px',
-    onOk() {
-      console.log('OK');
-    },
-    onCancel() {
-      console.log('Cancel');
-    },
-  });
-};
+];
 
-
+const [record, setRecord] = useState([]);
+const [filterRecord, setFilterRecord] = useState([]);
+  const handelFilter =(e)=>{
+          const newData = filterRecord.filter(row => row.nom_prenom_fr.toLowerCase().includes(e.target.value.toLowerCase()))
+          setRecord(newData);
+  }
   return (
     
     <div>
-    <Table responsive="xl">
-      <thead>
-        <tr>
-          <th>N°</th>
-          <th>Nom_et_prénom</th>
-          <th>Groupe</th>
-          <th>Diplome</th>
-          <th>Spécialité</th>
-          <th>Email</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {etudiantsPassifData.map((etudiants, index) => (
-          <tr key={etudiants.id_ens}>
-            <td>{index + 1}</td>
-            <td>{etudiants.nom_fr } {etudiants.prenom_fr}</td>
-            <td>{etudiants.passeport}</td>
-            <td>{etudiants.diplome}</td>
-            <td>{etudiants.specialite}</td>
-            <td>{etudiants.Email}</td>
-            <td>
-          <div className="d-flex">
-            <Space wrap>
-                 <Button   variant="link" success size={"small"}  href="/ListEtudiants/EtudiantDetail" >Détail</Button>
-                 
-              </Space>
-              <Space wrap>
-                 <Button danger size={"small"} onClick={showDeleteConfirm}>Supprimer</Button>
-              </Space>
+    <Card >
+            <div className='container mt-5'>
+            <div className='text-end'><input type="text" placeholder='rechercher...' onChange={handelFilter}/></div>
+            <DataTable 
+            columns={columns} 
+            data={record}
+            fixedHeader
+            pagination
+            fixedHeaderScrollHeight="550px"
+            highlightOnHover
+            actions={<button className="btn btn-sm btn-info">Export Excel</button>}
+            />
 
             </div>
-          </td>
-          </tr>
-        ))}
-      </tbody>
-
-
-      
-    </Table>
+            </Card>
   </div>
 
   );

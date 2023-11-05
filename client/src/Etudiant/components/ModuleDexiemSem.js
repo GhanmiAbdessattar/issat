@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 
-const Module = () => {
+const ModuleDexiemSem = () => {
 
   const [DetailNote, setDetailNote] = useState([]);
 
@@ -11,7 +11,7 @@ const Module = () => {
     console.log(cin)
 
     if(cin) {
-      fetch(`/auth/getNotes/${cin}`)
+      fetch(`/getNotesDexiemSemestre/${cin}`)
       .then((response) => response.json())
       .then((data) => {
 
@@ -79,4 +79,4 @@ const Module = () => {
   );
 };
 
-export default Module;
+export default ModuleDexiemSem;

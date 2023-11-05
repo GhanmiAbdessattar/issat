@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   FileOutlined,
   PieChartOutlined,
@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import { AiOutlinePicRight, AiOutlinePicLeft, AiOutlineLogout } from "react-icons/ai";
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import { Layout, Menu, theme } from "antd";
+import { Button, Layout, Menu, theme } from "antd";
 import { useState } from "react";
 import { Nav, NavDropdown } from "react-bootstrap";
 const { Header, Content, Footer, Sider } = Layout;
@@ -23,11 +23,12 @@ const items = [
   getItem("Acceuil", "Acceuil", <PieChartOutlined />),
   getItem("Actualité", "Actualite", <FileOutlined />),
   getItem("Resultat", "resultat", <UserOutlined />, [
-    getItem("1er Année", "resultat-1er"),
-    getItem("2 éme année", "resultat-2eme"),
-    getItem("3 éme année", "resultat-3eme"),
+    getItem("Resultat Ses_Princ", "resultat_Princ"),
+    getItem("Resultat Ses_Rat", "resultat_rat"),
+    getItem("Notes Principale", "note_principale"),
+    getItem("Notes Rattrappage", "note_rattrappage"),
   ]),
-  
+
   getItem("Emploi de Temps", "emploi", <UserOutlined />, [
     getItem("1er Année", "Emploi_Premiere"),
     getItem("2 éme année", "Emploi_Deuxieme"),
@@ -53,6 +54,43 @@ const items = [
 ];
 
 const MainLayoutAdmin = () => {
+
+
+  const handleLogout = () => {
+    // Supprimer le token du stockage local
+    localStorage.removeItem('token'); // Vous pouvez également utiliser sessionStorage
+
+    // Rediriger l'utilisateur vers la page de connexion
+    navigate('/login');
+  };
+
+  const [adminData, setAdminData] = useState([]);
+
+  useEffect(() => {
+    // Récupérer le numéro CIN depuis le local storage
+    const cin = localStorage.getItem('cin');
+
+
+    if (cin) {
+      fetch(`/auth/getAdminCin/${cin}`)
+        .then((response) => response.json())
+        .then((data) => {
+
+          if (data.admin ) {
+
+            setAdminData(data.admin);
+            console.log("admin:::::",data.admin[0])
+          } else {
+            console.error('Invalid data format: "Parcours" array not found or not an array.');
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching data:', error);
+        });
+    }
+
+  }, []);
+
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
@@ -73,7 +111,7 @@ const MainLayoutAdmin = () => {
         <div className="logo">
           <h4 className="text-white fs-5 text-center py-2 mb-0">
             <span className="sm-logo">ISSAT Mateur</span>
-            <span className="lg-logo">Logitheque</span>
+            <span className="lg-logo">ISSAT INFO</span>
           </h4>
         </div>
 
@@ -116,8 +154,9 @@ const MainLayoutAdmin = () => {
               />
             </div>
             <div>
+              <p className="mb-0">{adminData.email}</p>
               <h5 className="mb-0">Admin</h5>
-              <p className="mb-0">admin@gmail.com</p>
+
             </div>
             <div>
               <div>
@@ -131,7 +170,7 @@ const MainLayoutAdmin = () => {
                       <Link to="/admin/Profile">Profile</Link>
                     </NavDropdown.Item>
                     <NavDropdown.Item>
-                      <Link to="/logout">Logout</Link>
+                      <Button type="primary" onClick={handleLogout}></Button>
                     </NavDropdown.Item>
                   </NavDropdown>
                 </Nav>

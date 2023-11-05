@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
@@ -15,6 +15,7 @@ import {
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Button, Layout, Menu, theme } from "antd";
 import { useState } from "react";
+import axios from "axios";
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
@@ -37,6 +38,28 @@ const items = [
 ];
 
 const MainLayout = () => {
+
+  const [etudiantData, setEtudiantData] = useState({});
+
+  useEffect(() => {
+    // Récupérer le numéro CIN depuis le local storage
+    const cin = localStorage.getItem('cin');
+
+    if (cin) {
+      // Faire une requête pour obtenir les données de l'étudiant
+      axios
+        .get(`/getEtudiant/etudiant/${cin}`)
+        .then((response) => {
+          setEtudiantData(response.data.etudiant);
+        })
+        .catch((error) => {
+          console.error('Erreur lors de la récupération des données de l\'étudiant :', error);
+        });
+    }
+  }, []);
+
+
+
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
@@ -63,7 +86,7 @@ const MainLayout = () => {
         <div className="logo">
           <h4 className="text-white fs-5 text-center py-2 mb-0">
             <span className="sm-logo">ISSAT Mateur</span>
-            <span className="lg-logo">Logitheque</span>
+            <span className="lg-logo">ISSAT INFO</span>
           </h4>
         </div>
 
@@ -107,7 +130,7 @@ const MainLayout = () => {
                 />
               </div>
               <div>
-                <p className="mb-0">Ghanmiabdessattar1@gmail.com</p>
+                <p className="mb-0">{etudiantData.Email}</p>
                 <h5 className="mb-0">Etudiant</h5>
               </div>
               <div>

@@ -1,7 +1,7 @@
 import express from "express"
 import multer from "multer";
 import bodyParser from "body-parser"
-import { register, login, listetudiant,logout, Enseignant, detailnote, getNotes } from "../controllers/auth.js";
+import { register, login, listetudiant,logout, Enseignant, detailnote, getNotes, searchEns, getNotesPremSemestre, getNotesDexiemSemestre, getAdmin, getResultatPrinc, getAdminCin, DeleteEnseignant } from "../controllers/auth.js";
 import jwt from "jsonwebtoken";
 
 
@@ -30,7 +30,14 @@ router.get("/logout", logout)
 router.get("/enseignant/", Enseignant)
 router.get("/detailnote/", detailnote)
 router.get("/getNotes/:cin", getNotes)
+router.get("/getNotesPremSemestre/:cin", getNotesPremSemestre)
+router.get("/getNotesDexiemSemestre/:cin", getNotesDexiemSemestre)
+router.get("/getAdmin/", getAdmin)
+router.get("/getAdminCin/:cin", getAdminCin)
+router.delete("/DeleteEnseignant/:ident", DeleteEnseignant)
 
+router.get("/getResultatPrinc/", getResultatPrinc)
+router.get("/searchEns/:nom", searchEns)
 //router.post("/isEtudientAuth", verifyJWT ,verifyToken)
 
 

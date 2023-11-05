@@ -4,8 +4,12 @@ import { Modal, Space } from "antd";
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { Button } from 'antd';
 import UserDetail from "./UserDetail";
+import Search from "antd/es/transfer/search";
 
 const User = () => {
+  const onSearch = (value, _e, info) => console.log(info?.source, value);
+
+
   const { confirm } = Modal;
   const showConfirm = () => {
     confirm({
@@ -44,6 +48,9 @@ const User = () => {
 
   return (
     <div>
+      <div className="mb-2">
+      <Search placeholder="rechercher un utilisateur"    onSearch={onSearch} enterButton />
+      </div>
       <Table responsive="xl">
         <thead>
           <tr>
@@ -57,25 +64,7 @@ const User = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>01</td>
-            <td>Harbaoui Roudayna</td>
-            <td>Télécommunication</td>
-            <td>Reseaux</td>
-            <td>Harbaouiroudayna@gmail.com</td>
-            <td>20480465</td>
-            <td>
-            <div className="d-flex">
-              <Space wrap>
-                   <Button   size={"small"}  onClick={showConfirm}>Modifier</Button>
-                </Space>
-                <Space wrap>
-                   <Button danger size={"small"} onClick={showDeleteConfirm}>Supprimer</Button>
-                </Space>
-
-              </div>
-            </td>
-          </tr>
+         
           <tr>
             <td>02</td>
             <td>GHANMI ABDESSATAR</td>
@@ -96,25 +85,7 @@ const User = () => {
             </td>
           
           </tr>
-          <tr>
-            <td>03</td>
-            <td>Harbaoui Roudayna</td>
-            <td>Télécommunication</td>
-            <td>Reseaux</td>
-            <td>Harbaouiroudayna@gmail.com</td>
-            <td>20480465</td>
-            <td>
-            <div className="d-flex">
-              <Space wrap>
-                   <Button   size={"small"}  onClick={showConfirm}>Modifier</Button>
-                </Space>
-                <Space wrap>
-                   <Button danger size={"small"} onClick={showDeleteConfirm}>Supprimer</Button>
-                </Space>
-
-              </div>
-            </td>
-          </tr>
+      
           <tr>
             <td>04</td>
             <td>GHANMI ABDESSATAR</td>

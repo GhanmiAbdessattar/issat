@@ -3,7 +3,7 @@ import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Form, Input, Button, Checkbox, Alert, Space } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"
-//import Validation from "../components/Validation";
+import Validation from "../components/Validation";
 
 
 const Login = () => {
@@ -23,7 +23,7 @@ const Login = () => {
 
   const handleInput = (e) => {
     setInputs(prev => ({ ...prev, [e.target.name]: e.target.value }))
-    //setErrors(Validation(inputs))
+    setErrors(Validation(inputs))
   }
 
 

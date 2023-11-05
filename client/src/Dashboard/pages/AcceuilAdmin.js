@@ -1,8 +1,8 @@
 import React from "react";
 import "../../App.css";
 import ListeAdmin from "../components/ListeAdmin";
-import EtudiantListAttente from "../components/EtudiantListAttente";
 import Enseignant from "../components/Enseignant";
+import EtudiantActif from "../components/EtudiantActif";
 
 const AcceuilAdmin = () => {
   return (
@@ -13,38 +13,38 @@ const AcceuilAdmin = () => {
           <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 roudned-3">
             <div>
               <p className="">Total Etudiant</p>
-              <h4 className="mb-0">100$</h4>
+              <h4 className="mb-0">700</h4>
             </div>
             <div className="d-flex flex-column align-items-end">
               <h6>32%</h6>
-              <p className="mb-0">Juin</p>
+              <p className="mb-0">-</p>
             </div>
           </div>
           <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 roudned-3">
             <div>
               <p className="">Total Admin</p>
-              <h4 className="mb-0">100$</h4>
+              <h4 className="mb-0">3</h4>
             </div>
             <div className="d-flex flex-column align-items-end">
               <h6>32%</h6>
-              <p className="mb-0">Juin</p>
+              <p className="mb-0">-</p>
             </div>
           </div>
           <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 roudned-3">
             <div>
-              <p className="">Total </p>
-              <h4 className="mb-0">100$</h4>
+              <p className="">Total Enseignant</p>
+              <h4 className="mb-0">100</h4>
             </div>
             <div className="d-flex flex-column align-items-end">
               <h6>32%</h6>
-              <p className="mb-0">Juin</p>
+              <p className="mb-0">-</p>
             </div>
           </div>
         </div>
       </div>{" "}
       <div className="mt-4">
-        <h4 className="mb-4"> Liste des Etudiants en attente confirmation:</h4>
-        <EtudiantListAttente />
+        <h4 className="mb-4"> Liste des Etudiants Actifs:</h4>
+        <EtudiantActif />
       </div>
       <div className="my-4">
         <h4 className="mb-4"> Liste des Enseignants:</h4>

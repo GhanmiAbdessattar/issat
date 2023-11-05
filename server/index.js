@@ -19,7 +19,8 @@ app.use(cors({
 // Middleware pour gérer les téléchargements de fichiers Excel
 //const storage = multer.memoryStorage();
 
-
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
 
 

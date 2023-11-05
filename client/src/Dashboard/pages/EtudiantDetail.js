@@ -19,7 +19,7 @@ const EtudiantDetail = ({cin}) => {
         .catch((error) => {
           console.error('Error fetching data:', error);
         });
-    }, []);
+    });
 
 
   return (

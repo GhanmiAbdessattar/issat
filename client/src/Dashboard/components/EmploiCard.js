@@ -1,8 +1,10 @@
+import Search from 'antd/es/transfer/search';
 import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
 
 function EmploiCard() {
+  const onSearch = (value, _e, info) => console.log(info?.source, value);
 
 
   const [emploiData, setEmploiData] = useState([]);
@@ -28,14 +30,18 @@ function EmploiCard() {
 
   return (
     <div>
+      <div className="mb-2">
+      <Search placeholder="rechercher un enseignant"    onSearch={onSearch} enterButton />
+      </div>
       <Table striped bordered hover>
         <thead>
           <tr>
             <th>#</th>
             <th>Groupe</th>
             <th>Titre</th>
+            <th>Semestre</th>
             <th>Visualiser</th>
-            <th>Action</th>
+       
           </tr>
         </thead>
         <tbody>
@@ -44,8 +50,10 @@ function EmploiCard() {
               <td>{index + 1}</td>
               <td>{emploi.parcours_emp}</td>
               <td>{emploi.groupe}</td>
-              <td><Link to={emploi.adresse}>{emploi.adresse}</Link></td>
               <td>{emploi.semestre}</td>
+              <td><Link to= {process.env.PUBLIC_URL + '/' +emploi.adresse}>{emploi.parcours_emp}</Link></td>
+           
+             
             </tr>
 
 
