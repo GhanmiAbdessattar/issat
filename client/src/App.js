@@ -48,10 +48,10 @@ function App() {
   return (
     <Router>
      <Routes>
-     <Route path="/" element={<AuthGuard><Login /></AuthGuard>} />
-        <Route path="login" element={<AuthGuard><Login /></AuthGuard>} />
-        <Route path="register" element={<AuthGuard><Register /></AuthGuard>} />
-        <Route path="forgotPassword" element={<AuthGuard><ForgotPassword /></AuthGuard>} />
+     <Route path="/" element={<Login />} />
+           <Route path="login" element={<Login />} />
+           <Route path="register" element={<Register />} />
+           <Route path="forgotPassword" element={<ForgotPassword />} />
 
      </Routes>
         <Routes>

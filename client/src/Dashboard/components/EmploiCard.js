@@ -1,7 +1,7 @@
 import Search from 'antd/es/transfer/search';
 import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
-import { Link } from 'react-router-dom';
+
 
 function EmploiCard() {
   const onSearch = (value, _e, info) => console.log(info?.source, value);
@@ -10,9 +10,6 @@ function EmploiCard() {
   const [emploiData, setEmploiData] = useState([]);
 
   useEffect(() => {
-
-    
-
     fetch('/ajout/getemploi')
       .then(async (response) => response.json())
       .then((data) => {
@@ -27,11 +24,10 @@ function EmploiCard() {
       });
   }, []);
 
-
   return (
     <div>
       <div className="mb-2">
-      <Search placeholder="rechercher un enseignant"    onSearch={onSearch} enterButton />
+        <Search placeholder="rechercher un enseignant" onSearch={onSearch} enterButton />
       </div>
       <Table striped bordered hover>
         <thead>
@@ -41,7 +37,6 @@ function EmploiCard() {
             <th>Titre</th>
             <th>Semestre</th>
             <th>Visualiser</th>
-       
           </tr>
         </thead>
         <tbody>
@@ -51,19 +46,16 @@ function EmploiCard() {
               <td>{emploi.parcours_emp}</td>
               <td>{emploi.groupe}</td>
               <td>{emploi.semestre}</td>
-              <td><Link to= {process.env.PUBLIC_URL + '/' +emploi.adresse}>{emploi.parcours_emp}</Link></td>
-           
-             
+              <td>
+                <a href={'/' + emploi.adresse} target="_blank">
+                  {emploi.parcours_emp}
+                </a>
+              </td>
             </tr>
-
-
           ))}
         </tbody>
       </Table>
-
     </div>
-
-
   );
 }
 

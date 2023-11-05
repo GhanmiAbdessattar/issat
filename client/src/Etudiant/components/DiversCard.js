@@ -49,7 +49,11 @@ function DiversCard() {
               <td>{index + 1}</td>
               <td>{emploi.parcours_emp}</td>
               <td>{emploi.groupe}</td>
-              <td><Link to={emploi.adresse}>{emploi.adresse}</Link></td>
+              <td>
+                <a href={'/' + emploi.adresse} target="_blank">
+                  {emploi.parcours_emp}
+                </a>
+              </td>
               <td>{emploi.semestre}</td>
             </tr>
 

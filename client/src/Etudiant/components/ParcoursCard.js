@@ -53,7 +53,11 @@ function ParcoursCard() {
           <td>{index + 1}</td>
           <td>{parcours.code_parc }</td>
           <td>{parcours.groupe}</td>
-          <td><Link to={parcours.adresse}>{parcours.adresse}</Link></td>
+          <td>
+  <a href={'/' + parcours.adresse} target="_blank">
+    {parcours.adresse}
+  </a>
+</td>
           <td>{parcours.groupe}</td>
         </tr>
        
