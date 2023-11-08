@@ -1,7 +1,7 @@
 import express from "express"
 import multer from "multer";
 import bodyParser from "body-parser"
-import { register, login, listetudiant,logout, Enseignant, detailnote, getNotes, searchEns, getNotesPremSemestre, getNotesDexiemSemestre, getAdmin, getResultatPrinc, getAdminCin, DeleteEnseignant } from "../controllers/auth.js";
+import { register, login, listetudiant,logout, Enseignant, detailnote, getNotes, searchEns, getNotesPremSemestre, getNotesDexiemSemestre, getAdmin, getResultatPrinc, getAdminCin, DeleteEnseignant, DeleteResultatPrinc, getResultatRat, getNotesRat, DeleteNoteRat, DeleteNotePrinc, getNotesPrinc, getResultatRatEtud, getResultatPrincEtud } from "../controllers/auth.js";
 import jwt from "jsonwebtoken";
 
 
@@ -35,8 +35,16 @@ router.get("/getNotesDexiemSemestre/:cin", getNotesDexiemSemestre)
 router.get("/getAdmin/", getAdmin)
 router.get("/getAdminCin/:cin", getAdminCin)
 router.delete("/DeleteEnseignant/:ident", DeleteEnseignant)
+router.delete("/DeleteResultatPrinc/:cin", DeleteResultatPrinc)
+router.delete("/DeleteNoteRat/:cin", DeleteNoteRat)
+router.delete("/DeleteNotePrinc/:cin", DeleteNotePrinc)
 
 router.get("/getResultatPrinc/", getResultatPrinc)
+router.get("/getResultatPrincEtud/:cin", getResultatPrincEtud)
+router.get("/getResultatRatEtud/:cin", getResultatRatEtud)
+router.get("/getNotesRat/", getNotesRat)
+router.get("/getNotesPrinc/", getNotesPrinc)
+router.get("/getResultatRat/", getResultatRat)
 router.get("/searchEns/:nom", searchEns)
 //router.post("/isEtudientAuth", verifyJWT ,verifyToken)
 

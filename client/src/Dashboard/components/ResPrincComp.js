@@ -1,10 +1,21 @@
 //import axios from 'axios';
-import { Card } from 'antd';
+import { Button, Card } from 'antd';
+import axios from 'axios';
 
 import React, { useEffect, useState } from 'react'
 import DataTable from "react-data-table-component"
 
 const ResPrincComp = () => {
+
+  const handelDelete = (cin) =>{
+    const confirm = window.confirm("would you lik to Delete !!!")
+    if(confirm){
+      axios.delete('/auth/DeleteResultatPrinc/'+cin)
+      .then(res => {
+        window.location.reload(false);
+      }).catch(err => console.log(err));
+    }
+  }
 
     useEffect(() => {
         fetch('/auth/getResultatPrinc')
@@ -13,7 +24,6 @@ const ResPrincComp = () => {
           if (data.resultat_principale && Array.isArray(data.resultat_principale)) {
             setRecord(data.resultat_principale);
             setFilterRecord(data.resultat_principale);
-            console.log(data.resultat_principale)
           } else {
             console.error('Invalid data format: "Note" array not found or not an array.');
           }
@@ -60,7 +70,12 @@ const ResPrincComp = () => {
             name: "Créd total",
             selector:row => row.credit_semestre,
             sortable: true
-        }
+        },
+          {
+        name: "Action",
+        cell: (row)=> ( <Button className="btn btn-sm btn-primary" onClick={e =>handelDelete(row.cin)}> Supprimer</Button>),
+      
+    }
        
     ];
      

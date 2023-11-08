@@ -69,6 +69,11 @@ const MainLayout = () => {
 
   const handelLogout = ()=>{
         localStorage.removeItem('token')
+        localStorage.removeItem('cin')
+        localStorage.removeItem('id')
+        localStorage.removeItem('role')
+
+
         navigate('/')
   }
 

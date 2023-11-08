@@ -63,7 +63,7 @@ const columns = [
 const [record, setRecord] = useState([]);
 const [filterRecord, setFilterRecord] = useState([]);
   const handelFilter =(e)=>{
-          const newData = filterRecord.filter(row => row.nom_prenom_fr.toLowerCase().includes(e.target.value.toLowerCase()))
+          const newData = filterRecord.filter(row => row.nom_fr.toLowerCase().includes(e.target.value.toLowerCase()))
           setRecord(newData);
   }
   return (

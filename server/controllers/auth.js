@@ -40,10 +40,7 @@ export const register = (req, res) => {
                         //update le statut de l'tudiant de passif vers actif
                         db.query('UPDATE issat2.etudiant SET statut_etud=? WHERE  mat_cin = ?', ["actif", cin], (err, result) => { })
                         const id = numinscription + cin;
-                        console.log(response)
-                        console.log("id pour token:", id)
                         const token = jwt.sign({ id }, "jwt-secret-key", { expiresIn: '20s' });
-                        console.log("votre token", token)
                         //result.cookie('token', token);
                         //result.cookie('token', token);
                         return res.status(200).json({ Message: "User ajouter avec Success", token: token });
@@ -286,7 +283,6 @@ export const getNotesDexiemSemestre = async (req, res) => {
             }
         });
     } catch (err) {
-        console.error(err);
         return res.status(500).json({ Message: 'Erreur interne du serveur' });
     }
 };
@@ -295,12 +291,10 @@ export const getAdmin = (req, res) => {
    
     const sql = 'SELECT * FROM issat2.utilisateur WHERE  role=?';
     db.query(sql,["admin"],(err, results) => {
-        console.log(results)
         if (!results[0]) {
             console.error('Erreur lors de la récupération des données du Admin :', err);
             res.status(404).json({ Message: 'Erreur lors de la récupération des données de l\'Admin' });
         } else {
-            console.log("resultat:", results);
             return res.status(200).json({ Message: " Admin recuperer avec Success", admin: results });
         }
     });
@@ -310,12 +304,10 @@ export const getAdminCin = (req, res) => {
     const cin = req.params.cin;
     const sql = 'SELECT * FROM issat2.utilisateur WHERE cin=? && role=?';
     db.query(sql,[cin, "admin"],(err, results) => {
-        console.log(results)
         if (!results[0]) {
             console.error('Erreur lors de la récupération des données du Admin :', err);
             res.status(404).json({ Message: 'Erreur lors de la récupération des données de l\'Admin' });
         } else {
-            console.log("resultat:", results);
             return res.status(200).json({ Message: " Admin recuperer avec Success", admin: results });
         }
     });
@@ -336,17 +328,35 @@ export const getResultatPrinc = async (req, res) => {
             }
         });
     } catch (err) {
-        console.error(err);
         return res.status(500).json({ Message: 'Erreur interne du serveur' });
     }
 };
+
+export const getResultatRat = async (req, res) => {
+  
+    try {
+        const sql = 'SELECT * FROM issat2.resultat_rattrapage ';
+        db.query(sql, (err, results) => {
+            if (err) {
+                console.error('Erreur lors de la récupération des resultat des étudiants :', err);
+                return res.status(500).json({ Message: 'Erreur lors de la récupération des resultat des étudiants' });
+            } else {
+                const resultat_rattrapage = results;
+                return res.status(200).json({ Message: "Touts les resultats du session principale sont récupérées avec succès", resultat_rattrapage });
+            }
+        });
+    } catch (err) {
+        return res.status(500).json({ Message: 'Erreur interne du serveur' });
+    }
+};
+
+
 
 export const DeleteEnseignant = (req, res)=>{
     const ident = req.params.ident;
     console.log(ident)
     db.query('DELETE FROM issat2.enseignant WHERE Ident=?', [ident],(err, results) => {
         if (err) {
-            console.error(err);
             res.status(500).json('Erreur lors de la suppression des données');
           } else {
             res.status(200).json({ Message: " Enseignant supprimer avec Success" });
@@ -354,3 +364,116 @@ export const DeleteEnseignant = (req, res)=>{
     
     });
 } 
+
+export const DeleteResultatPrinc = (req, res)=>{
+    const cin = req.params.cin;
+    db.query('DELETE FROM issat2.resultat_principale WHERE cin=?', [cin],(err, results) => {
+        if (err) {
+            res.status(500).json('Erreur lors de la suppression des données');
+          } else {
+            res.status(200).json({ Message: " Resultat supprimer avec Success" });
+          }
+    
+    });
+} 
+
+
+
+export const getNotesRat = async (req, res) => {
+  
+    try {
+        const sql = 'SELECT * FROM issat2.note_rattrapage ';
+        db.query(sql, (err, results) => {
+            if (err) {
+                console.error('Erreur lors de la récupération des resultat des étudiants :', err);
+                return res.status(500).json({ Message: 'Erreur lors de la récupération des resultat des étudiants' });
+            } else {
+                const Notes_Rat = results;
+                return res.status(200).json({ Message: "Touts les resultats du session principale sont récupérées avec succès", Notes_Rat });
+            }
+        });
+    } catch (err) {
+        return res.status(500).json({ Message: 'Erreur interne du serveur' });
+    }
+};
+
+
+export const getNotesPrinc = async (req, res) => {
+  
+    try {
+        const sql = 'SELECT * FROM issat2.note_principale ';
+        db.query(sql, (err, results) => {
+            if (err) {
+                console.error('Erreur lors de la récupération des resultat des étudiants :', err);
+                return res.status(500).json({ Message: 'Erreur lors de la récupération des resultat des étudiants' });
+            } else {
+                const Notes_Princ = results;
+                return res.status(200).json({ Message: "Touts les resultats du session principale sont récupérées avec succès", Notes_Princ });
+            }
+        });
+    } catch (err) {
+        return res.status(500).json({ Message: 'Erreur interne du serveur' });
+    }
+};
+
+export const DeleteNoteRat = (req, res)=>{
+    const cin = req.params.cin;
+    db.query('DELETE FROM issat2.note_rattrappage WHERE cin=?', [cin],(err, results) => {
+        if (err) {
+            res.status(500).json('Erreur lors de la suppression des données');
+          } else {
+            res.status(200).json({ Message: " Note supprimer avec Success" });
+          }
+    
+    });
+}
+
+export const DeleteNotePrinc = (req, res)=>{
+    const cin = req.params.cin;
+    db.query('DELETE FROM issat2.note_principale WHERE cin=?', [cin],(err, results) => {
+        if (err) {
+            res.status(500).json('Erreur lors de la suppression des données');
+          } else {
+            res.status(200).json({ Message: " Note supprimer avec Success" });
+          }
+    
+    });
+}
+
+
+
+export const getResultatPrincEtud = async (req, res) => {
+    const cin = req.params.cin;
+    try {
+        const sql = 'SELECT * FROM issat2.resultat_principale WHERE cin=? ';
+        db.query(sql,[cin], (err, results) => {
+            if (err) {
+                console.error('Erreur lors de la récupération des resultat des étudiants :', err);
+                return res.status(500).json({ Message: 'Erreur lors de la récupération des resultat des étudiants' });
+            } else {
+                const resultat_principale = results;
+                return res.status(200).json({ Message: "Touts les resultats du session principale sont récupérées avec succès", resultat_principale });
+            }
+        });
+    } catch (err) {
+        return res.status(500).json({ Message: 'Erreur interne du serveur' });
+    }
+};
+
+export const getResultatRatEtud = async (req, res) => {
+    const cin = req.params.cin;
+    try {
+        const sql = 'SELECT * FROM issat2.resultat_rattrapage WHERE cin=?';
+        db.query(sql,[cin], (err, results) => {
+            if (err) {
+                console.error('Erreur lors de la récupération des resultat des étudiants :', err);
+                return res.status(500).json({ Message: 'Erreur lors de la récupération des resultat des étudiants' });
+            } else {
+                const resultat_rattrapage = results;
+                return res.status(200).json({ Message: "Touts les resultats du session principale sont récupérées avec succès", resultat_rattrapage });
+            }
+        });
+    } catch (err) {
+        return res.status(500).json({ Message: 'Erreur interne du serveur' });
+    }
+};

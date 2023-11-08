@@ -1,102 +1,108 @@
-import React, { useState } from 'react'
+import { Button, Card } from 'antd'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import DataTable from "react-data-table-component"
 
 const ResRatComp = () => {
+    
+
+        const handelDelete = (cin) =>{
+          const confirm = window.confirm("would you lik to Delete !!!")
+          if(confirm){
+            axios.delete('/auth/DeleteResultatPrinc/'+cin)
+            .then(res => {
+              window.location.reload(false);
+            }).catch(err => console.log(err));
+          }
+        }
+      
+          useEffect(() => {
+              fetch('/auth/getResultatRat')
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.resultat_rattrapage && Array.isArray(data.resultat_rattrapage)) {
+                  setRecord(data.resultat_rattrapage);
+                  setFilterRecord(data.resultat_rattrapage);
+                } else {
+                  console.error('Invalid data format: "Note" array not found or not an array.');
+                }
+              })
+              .catch((error) => {
+                console.error('Error fetching data:', error);
+              });
+        
+      }, []);
+
     const columns = [
+        
         {
-            name:'Name',
-            selector: row => row.name,
+            name: "Code_etu",
+            selector:row => row.nom_prenom_fr,
             sortable: true
         },
         {
-            name: "Email",
-            selector:row => row.name,
+            name: "Moy sem 1",
+            selector:row => row.moyenne_semestre_1,
             sortable: true
-        }
+        },
+        {
+            name: "Créd sem 1",
+            selector:row => row.credit_semestre_1,
+            sortable: true
+        },
+        {
+            name: "Moy sem 2",
+            selector:row => row.moyenne_semestre_2,
+            sortable: true
+        },
+        {
+            name: "Créd sem 2",
+            selector:row => row.credit_semestre_2,
+            sortable: true
+        },
+        {
+            name: "Moy Gén",
+            selector:row => row.moyenne_generale,
+            sortable: true
+        },
+        {
+            name: "Créd total",
+            selector:row => row.credit_total,
+            sortable: true
+        },
+          {
+        name: "Action",
+        cell: (row)=> ( <Button className="btn btn-sm btn-primary" onClick={e =>handelDelete(row.cin)}> Supprimer</Button>),
+      
+    }
+       
     ];
 
-    const data = [
-        {
-            id:1,
-            name: 'ghanmi',
-            email: 'ghanmi@gmail.com'
-        },
-        {
-            id:2,
-            name: 'abdessattar',
-            email: 'ghanmi@gmail.com'
-        },
-        {
-            id:3,
-            name: 'anwer',
-            email: 'ghanmi@gmail.com'
-        },
-        {
-            id:4,
-            name: 'dalii',
-            email: 'ghanmi@gmail.com'
-        },
-        {
-            id:5,
-            name: 'aymen',
-            email: 'ghanmi@gmail.com'
-        },
-        {
-            id:6,
-            name: 'hichem',
-            email: 'ghanmi@gmail.com'
-        },
-        {
-            id:7,
-            name: 'ali',
-            email: 'ghanmi@gmail.com'
-        },
-        {
-            id:8,
-            name: 'emna',
-            email: 'ghanmi@gmail.com'
-        },
-        {
-            id:9,
-            name: 'dali',
-            email: 'ghanmi@gmail.com'
-        },
-        {
-            id:10,
-            name: 'anis',
-            email: 'ghanmi@gmail.com'
-        },
-        {
-            id:11,
-            name: 'hafedh',
-            email: 'ghanmi@gmail.com'
-        }
-    ]
+    const [record, setRecord] = useState([]);
+    const [filterRecord, setFilterRecord] = useState([]);
+      const handelFilter =(e)=>{
+              const newData = filterRecord.filter(row => row.nom_prenom_fr.toLowerCase().includes(e.target.value.toLowerCase()))
+              setRecord(newData);
+      }
 
-    const [records, setRecords] = useState(data);
-
-    const handelFilter =(e)=>{
-            const newData = data.filter(row =>{
-                return row.name.toLocaleLowerCase().includes(e.target.value.toLocaleLowerCase())
-            })
-            setRecords(newData)
-    }
-
-
+    
   return (
     <div>
         <div>
         Resultat Session Rattrappage:
         </div>
-        <div className='text-end'><input type="text" placeholder='rechercher...' onChange={handelFilter}/></div>
-            <DataTable
-            columns={columns}
-            data={records}
-            selectableRows
+        <Card >
+            <div className='container mt-5'>
+            <div className='text-end'><input type="text" placeholder='rechercher...' onChange={handelFilter}/></div>
+            <DataTable 
+            columns={columns} 
+            data={record}
             fixedHeader
             pagination
-            
-            ></DataTable>
+            />
+
+            </div>
+            </Card>
 
     </div>
   )

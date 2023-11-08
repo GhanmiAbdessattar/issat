@@ -15,7 +15,6 @@ const Login = () => {
     email: "",
     password: ""
   })
-  //const [LoginStatut, setLoginStatus] = useState(false)
 
   const [errors, setErrors] = useState([]);
   const [msg, setMsg] = useState("");
@@ -23,7 +22,7 @@ const Login = () => {
 
   const handleInput = (e) => {
     setInputs(prev => ({ ...prev, [e.target.name]: e.target.value }))
-    setErrors(Validation(inputs))
+   // setErrors(Validation(inputs))
   }
 
 
@@ -36,13 +35,8 @@ const Login = () => {
     if (response.data.Message === "Success") {
       const token = response.data.token
       const etudiantData = response.data.etudiant;
-      console.log(etudiantData)
-     // const cin = etudiantData.cin;
-     // const role = etudiantData.role;
-     // const email = etudiantData.email;
      const [id,cin, role] = etudiantData;
 
-     
       localStorage.setItem("token", token);
       localStorage.setItem("id", id);
       localStorage.setItem("cin", cin);
@@ -59,7 +53,7 @@ const Login = () => {
       }
     } else {
       setMsg(response.data.Message);
-      setErrors([]);
+      setErrors(Validation(inputs))
     }
 
    }catch(err){
@@ -94,6 +88,7 @@ const Login = () => {
               placeholder="Email"
               name="email"
               id="email"
+              autoComplete="off"
               onChange={handleInput}
             />
             {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}

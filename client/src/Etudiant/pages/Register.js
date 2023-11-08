@@ -23,16 +23,13 @@ const Register = () => {
 
   const handleInput = (e) => {
     setInputs(prev => ({ ...prev, [e.target.name]: e.target.value }))
-    console.log(inputs);
 
   }
   const handelValidation = async (e) => {
     e.preventDefault()
     try{
       const response = await axios.post("/auth/register/", inputs);
-     // console.log(response.data.Message)
       if (response.data.Message === "User ajouter avec Success") {
-       // console.log(response)
         alert('register successful')
         navigate('/login')
         setMsg(response.data.Message)
@@ -42,11 +39,9 @@ const Register = () => {
         setErrors(Validation(inputs))
       }
      }catch(err){
-      console.log(err)
      }
 
   
-    //            {errors.cin && <p style={{ color: "red" }}>{errors.cin}</p>}
 
   }
   return (

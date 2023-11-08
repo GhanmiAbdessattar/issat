@@ -59,6 +59,9 @@ const MainLayoutAdmin = () => {
   const handleLogout = () => {
     // Supprimer le token du stockage local
     localStorage.removeItem('token'); // Vous pouvez également utiliser sessionStorage
+    localStorage.removeItem('cin');
+    localStorage.removeItem('role');
+    localStorage.removeItem('id');
 
     // Rediriger l'utilisateur vers la page de connexion
     navigate('/login');
@@ -78,7 +81,7 @@ const MainLayoutAdmin = () => {
 
           if (data.admin ) {
 
-            setAdminData(data.admin);
+            setAdminData(data.admin[0]);
             console.log("admin:::::",data.admin[0])
           } else {
             console.error('Invalid data format: "Parcours" array not found or not an array.');
@@ -170,7 +173,7 @@ const MainLayoutAdmin = () => {
                       <Link to="/admin/Profile">Profile</Link>
                     </NavDropdown.Item>
                     <NavDropdown.Item>
-                      <Button type="primary" onClick={handleLogout}></Button>
+                      <Button type="primary" onClick={handleLogout}>Logout</Button>
                     </NavDropdown.Item>
                   </NavDropdown>
                 </Nav>

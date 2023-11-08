@@ -1,8 +1,8 @@
 import { Card } from "antd";
 import React from "react";
 import Moyenne from "./Moyenne";
-import Module from "./ModulePremSem";
 import { Link } from "react-router-dom";
+import ModulePremSem from "./ModulePremSem";
 
 const DetailPremSem = () => {
   return (
@@ -29,7 +29,7 @@ const DetailPremSem = () => {
         <Moyenne />
       </Card>
       <Card>
-        <Module />
+        <ModulePremSem />
       </Card>
     </div>
   );

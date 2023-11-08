@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 import axios from 'axios';
+import EtudiantPassif from "../components/EtudiantPassif";
 
 
 const AjoutEtudiants = () => {
@@ -78,7 +79,7 @@ const AjoutEtudiants = () => {
 
       <Card>
         <Form>
-        <Form.Group controlId="formFile" className="mb-3">
+        <Form.Group controlId="formFile" className="mb-2  ">
           <Form.Label>
             Selectionné le fichier Excel contenant la liste des Etudiants à
             ajouté:
@@ -95,11 +96,13 @@ const AjoutEtudiants = () => {
           <Form.Control type="file"  accept=".xls, .xlsx" name='file' onChange={handleFileChange} />
         </Form.Group>
         <Stack gap={2} className="col-md-5 mx-auto">
-          <Button type="submit"  onClick={handleSubmit} variant="secondary">Ajouter</Button>
+          <Button type="submit" variant="primary" onClick={handleSubmit}>Ajouter</Button>
           <Button type="submit" onClick={handleReset} variant="secondary">retour</Button>
         </Stack>
         </Form>
-    
+      </Card>
+      <Card>
+      <EtudiantPassif />
       </Card>
       
     </div>

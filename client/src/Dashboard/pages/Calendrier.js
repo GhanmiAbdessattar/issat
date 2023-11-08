@@ -10,6 +10,7 @@ import EmploiCard from "../components/EmploiCard";
 
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+import axios from "axios";
 
 
 const Calendrier = () => {
@@ -20,54 +21,51 @@ const [uploadedFile, setUploadedFile] = useState('');
 const [pdfFile, setPdfFile] = useState(null);
 const [pdfFileError, setPdfFileError] = useState('')
 
-
-
+const acceptablefile = ["pdf", "PDF"];
+const checkFile = (name) => {
+  return acceptablefile.includes(name?.split(".").pop().toLowerCase());
+}
 const [inputs, setInputs] = useState({
   session:"",
   semestre:"",
 })
 
 //on change file
-const fileType=['application/pdf'];
-const handlePdfFileChange =(e)=>{
-  let selectedFile = e.target.files[0]
-  if (selectedFile){
-    if(selectedFile && fileType.includes(selectedFile.type)){
-      let reader = new FileReader();
-      reader.readAsDataURL(selectedFile);
-      reader.onloadend = (e)=>{
-        setPdfFile(e.target.result);
-        setPdfFileError('');
-      }
-    }else{
-      setPdfFile(null)
-      setPdfFileError('Please Select Valid PDF File')
-    }
 
-  }else{
-    console.log('select your file')
+
+const handlFileChange =(e)=>{
+  setPdfFile(e.target.files[0]);
+  const datafile = e.target.files[0];
+  if (!datafile) {
+    console.log("merci de vérifier le fichier")
+    setPdfFileError(datafile)
   }
-
-}
-
-const handleChange =(e)=>{
-  setInputs(prev=>({...prev, [e.target.name]: e.target.value}))
-  console.log(inputs);
 }
 
 
 const handleSubmit = async (e) => {
   e.preventDefault()
-  if (pdfFile!==null){
-    
-  }else{
-   
+  const formData = new FormData();
+  formData.append("pdfFile", pdfFile)
+  const config = {
+    headers: {
+      'content-type': 'multipart/form-data',
+    },
+  }
+
+  if (!checkFile(pdfFile.name)) {
+    setPdfFileError("Erreur lors de du l'upload du fichier, merci de verifier le fichier selectionnée")
+  } else {
+    await axios.post('/ajout/ajoutcalendrier', formData, config).then((response) => {
+      setUploadedFile("Calendrier importé avec succès")
+    }).catch((error) => {
+      setPdfFileError(error)
+      setUploadedFile("Erreur lors de du l'upload du fichier, merci de verifier le fichier selectionnée: ")
+    });
+  }
 
   }
 
-
- 
-};
 const handleReset = async (e) => {
   e.preventDefault();
   setUploadedFile('');
@@ -103,8 +101,8 @@ const handleReset = async (e) => {
                 <label className="form-label">Session:</label>
                 <Form.Select aria-label="Default select example" name="session">
                   <option></option>
-                  <option value="principale" onChange={handleChange}>Principale</option>
-                  <option value="controle" onChange={handleChange}>Controle</option>
+                  <option value="principale" >Principale</option>
+                  <option value="controle" >Controle</option>
                 </Form.Select>
               </div>
             </div>
@@ -114,8 +112,8 @@ const handleReset = async (e) => {
                 <label className="form-label">Semestre:</label>
                 <Form.Select aria-label="Default select example" name="semestre">
                   <option></option>
-                  <option value="1" onChange={handleChange}>Semestre 1</option>
-                  <option value="2" onChange={handleChange}>Semestre 2</option>
+                  <option value="1" >Semestre 1</option>
+                  <option value="2" >Semestre 2</option>
                 </Form.Select>
               </div>
             </div>
@@ -125,7 +123,7 @@ const handleReset = async (e) => {
                 <Form.Label>
                   Selectionné une Calendrier des Examens sous format PDF à ajouté:
                 </Form.Label>
-                <Form.Control className="form-control" type="file" accept=".pdf" name='file' required onChange={handlePdfFileChange} />
+                <Form.Control className="form-control" type="file" accept=".pdf" name='file' required onChange={handlFileChange} />
               </Form.Group>
               <Stack gap={2}>
                 <Button  type="submit" onClick={handleSubmit} className='btn btn-submit btn-lg'>Ajouter</Button>

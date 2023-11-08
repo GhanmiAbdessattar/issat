@@ -11,14 +11,13 @@ const ModulePremSem = () => {
     console.log(cin)
 
     if(cin) {
-      fetch(`/getNotesPremSemestre/${cin}`)
+      fetch(`/auth/getNotesPremSemestre/${cin}`)
       .then((response) => response.json())
       .then((data) => {
 
         if (data.Notes && Array.isArray(data.Notes)) {
 
           setDetailNote(data.Notes);
-          //console.log("enseignant",data.enseignant)
         } else {
           console.error('Invalid data format: "Note" array not found or not an array.');
         }

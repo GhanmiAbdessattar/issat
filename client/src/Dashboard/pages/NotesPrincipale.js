@@ -41,9 +41,8 @@ const NotesPrincipale = () => {
       console.log("invalid file type")
       setError("invalid file type")
     } else {
-      await axios.post('/ajout/ajoutresultat', formData, config).then((response) => {
+      await axios.post('/ajout/ajoutnotesprinc', formData, config).then((response) => {
         setUploadedFile("Données importées avec succès")
-        console.log(response.data)
       }).catch((error) => {
         setError(error)
         console.log("Erreur lors de du l'upload du fichier, merci de verifier le fichier selectionnée: ", error);

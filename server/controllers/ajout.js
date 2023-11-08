@@ -233,8 +233,8 @@ export const ajoutresultatprinc = (req, res) => {
 }
 
 
-//ajouter les notes
-export const ajoutnotes = (req, res) => {
+//ajouter les notes principale
+export const ajoutnotesprinc = (req, res) => {
   const workbook = XLSX.read(req.file.buffer, { type: 'buffer' });
   const sheetName = workbook.SheetNames[0];
   const sheet = workbook.Sheets[sheetName];
@@ -282,6 +282,60 @@ export const ajoutnotes = (req, res) => {
   }
 
 }
+
+
+//ajouter les notes rattrappage
+export const ajoutnotesrat = (req, res) => {
+  const workbook = XLSX.read(req.file.buffer, { type: 'buffer' });
+  const sheetName = workbook.SheetNames[0];
+  const sheet = workbook.Sheets[sheetName];
+  const data = XLSX.utils.sheet_to_json(sheet);
+  if (data.length > 0) {
+    // Insérez les données dans la base de données MySQL
+    const sql = 'INSERT INTO issat2.note_rattrapage (annee, semestre, parcours, module, matiere, niveau, num_inscription, cin, nom_fr, nom_ar, groupe, note_exam, note_ds, note_tp, note_oral, note_expose, note_exercice, autre_presentielle, autre_note, moyenne, credits, dispense) VALUES ?';
+    const values = data.map((row) => [
+      row['Annee'],
+      row['Semestre'],
+      row['Parcours'],
+      row['Module'],
+      row['Matiere'],
+      row['Niveau'],
+      row['N_Inscription'],
+      row['CIN'],
+      row['Nom_Prenom_Fr'],
+      row['Prenom_Nom_Ar'],
+      row['Groupe'],
+      row['Examen'],
+      row['DS'],
+      row['TP'],
+      row['Oral'],
+      row['Expose'],
+      row['Exercice'],
+      row['Autre_presentielle'],
+      row['Autre'],
+      row['Moyenne'],
+      row['Credits'],
+      row['Dispense'],
+
+    ]);
+
+    db.query(sql, [values], (err, result) => {
+      if (err) {
+        console.error('Erreur lors de l\'insertion des données :', err);
+        res.status(500).json({ message: 'Erreur lors de l\'importation des données' });
+      } else {
+        res.status(200).json({ message: 'Données importées avec succès' });
+      }
+    });
+  } else {
+    console.error('Erreur lors de du l\'upload du fichier, merci de verifier le fichier selectionnée:');
+    res.status(500).json({ message: 'Erreur lors de du l\'upload du fichier, merci de verifier le fichier selectionnée:' });
+  }
+
+}
+
+
+
 
 export const ajoutparcours = (req, res) => {
   const file = req.file
@@ -352,7 +406,7 @@ export const ajoutemploi = (req, res) => {
     const modifiedFilename = file.originalname.replace('_', '').replace('.pdf', '');
     const parcours_emp = modifiedFilename;
     const groupe = file.filename.replace('_', '').replace('.pdf', '');
-    const adresse = file.path;
+    const adresse = file.originalname;
     const timestamp = Date.now();
     const date = new Date(timestamp);
     const semestre = "01";
@@ -394,7 +448,88 @@ export const getemploi = async (req, res) => {
   });
 }
 
+//ajouter les resultats
+export const ajoutresultatRat = (req, res) => {
+  const workbook = XLSX.read(req.file.buffer, { type: 'buffer' });
+  const sheetName = workbook.SheetNames[0];
+  const sheet = workbook.Sheets[sheetName];
+  const data = XLSX.utils.sheet_to_json(sheet);
+  if (data.length > 0) {
+    // Insérez les données dans la base de données MySQL
+    const sql = 'INSERT INTO issat2.resultat_rattrapage (annee, semestre, parcours, niveau, num_inscription, cin, nom_prenom_fr, nom_prenom_ar, groupe, moyenne_semestre_1, credit_semestre_1,  moyenne_semestre_2, credit_semestre_2, moyenne_generale, credit_total, resultat) VALUES ?';
+    const values = data.map((row) => [
+      row['Annee'],
+      row['Semestre'],
+      row['Parcours'],
+      row['Niveau'],
+      row['N_Inscription'],
+      row['CIN'],
+      row['Nom_Prenom_Fr'],
+      row['Prenom_Nom_Ar'],
+      row['Groupe'],
+      row['Moyenne_semestre_1'],
+      row['Credit_semestre_1'],
+      row['Moyenne_semestre_2'],
+      row['Credit_semestre_2'],
+      row['Moyenne_generale'],
+      row['Credit_total'],
+      row['Resultat'],
+
+    ]);
+
+    db.query(sql, [values], (err, result) => {
+      if (err) {
+        console.error('Erreur lors de l\'insertion des données :', err);
+        res.status(500).json({ message: 'Erreur lors de l\'importation des données' });
+      } else {
+        res.json({ message: 'Touts les resultats du session principales sont importées avec succès' });
+      }
+    });
+  } else {
+    console.error('Erreur lors de du l\'upload du fichier, merci de verifier le fichier selectionnée:');
+    res.status(500).json({ message: 'Erreur lors de du l\'upload du fichier, merci de verifier le fichier selectionnée:' });
+  }
+
+}
 
 
 
+export const ajoutcalendrier = (req, res) => {
+  const IRS = req.body.IRS
+  const file = req.file
+  if (!file) {
+    return res.status(400).json('Aucun fichier n\'a été envoyé.');
+  }
+  // Vérifier le type de fichier
+  const fileExtension = mime.extension(file.mimetype);
+  if (fileExtension !== 'pdf') {
+    return res.status(400).json('Le fichier n\'est pas au format PDF.');
+  }
+  if (file) {
+    // Insérez les données dans la base de données MySQL
+    // Modifiez le nom du fichier en supprimant l'extension et les espaces
+    const modifiedFilename = file.originalname.replace('_', '').replace('.pdf', '');
+    const parcours_emp = modifiedFilename;
+    const groupe = file.filename.replace('_', '').replace('.pdf', '');
+    const adresse = file.originalname;
+    const timestamp = Date.now();
+    const date = new Date(timestamp);
+    const semestre = "01";
+    const annee_scol = "2023";
 
+    db.query('INSERT INTO issat2.emploi SET parcours_emp=?, niveau=?, groupe=?, adresse=?, semestre=?, annee_scol_emp=?, date_ajout_emp=?', [parcours_emp, IRS, groupe, adresse, semestre, annee_scol, date], (err, result) => {
+
+      if (err) {
+        console.error('Erreur lors de l\'insertion du fichier :', err);
+        res.status(400).json({ message: 'Erreur lors de l\'importation du fichier' });
+      } else {
+        res.status(200).json({ message: 'Calendrier reçu et sauvegardé avec succès' });
+      }
+    });
+  } else {
+    console.error('Erreur lors de du l\'upload du fichier, merci de verifier le fichier selectionnée:');
+    res.status(500).json({ message: 'Erreur lors de du l\'upload du fichier, merci de verifier le fichier selectionnée:' });
+
+  }
+
+}

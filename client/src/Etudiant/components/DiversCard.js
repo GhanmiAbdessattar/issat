@@ -1,7 +1,6 @@
 import Search from 'antd/es/transfer/search';
 import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
-import { Link } from 'react-router-dom';
 
 function DiversCard() {
 
